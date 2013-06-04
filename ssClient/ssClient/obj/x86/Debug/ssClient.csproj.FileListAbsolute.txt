@@ -1,0 +1,8 @@
+D:\Programming\ShadowSquadron\ssClient\ssClient\bin\Debug\ssClient.exe
+D:\Programming\ShadowSquadron\ssClient\ssClient\bin\Debug\ssClient.pdb
+D:\Programming\ShadowSquadron\ssClient\ssClient\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Programming\ShadowSquadron\ssClient\ssClient\obj\x86\Debug\ssClient.Properties.Resources.resources
+D:\Programming\ShadowSquadron\ssClient\ssClient\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Programming\ShadowSquadron\ssClient\ssClient\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Programming\ShadowSquadron\ssClient\ssClient\obj\x86\Debug\ssClient.exe
+D:\Programming\ShadowSquadron\ssClient\ssClient\obj\x86\Debug\ssClient.pdb
