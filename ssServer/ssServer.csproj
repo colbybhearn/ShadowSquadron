@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>9f1334f1-4d62-4d8d-9709-81626beb6a9b</ProjectGuid>
+    <ProjectGuid>{90C2536E-4C04-4E5D-AEFC-B4506420F1C1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ssServer</RootNamespace>
