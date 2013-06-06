@@ -1,0 +1,21 @@
+﻿
+
+Solution:
+
+ssGame is the project specific to Shadow Squadron
+It references GameHelper and WindowsGameLibrary.
+ssGame has forms for the client and server , and a splash screen to pick which to use (for easy development).
+ssGame has game classes for the Client and Server.
+
+
+GUI:
+ssGame.frmClient inherits from GameHelper.Gui.Forms.frmClientBase
+GameHelper.Gui.Forms.frmClientBase inherits from Windows.Forms.Form
+
+Game Logic / setup:
+GameHelper.Base.ClientBase inherits from GameHelper.Base.GameBase
+ssGame.ClientGame inherits from GameHelper.Base.ClientBase
+
+
+
+
