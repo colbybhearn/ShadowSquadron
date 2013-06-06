@@ -1,9 +1,0 @@
-D:\Programming\ShadowSquadron\ssServer\bin\Debug\ssServer.exe
-D:\Programming\ShadowSquadron\ssServer\bin\Debug\ssServer.pdb
-D:\Programming\ShadowSquadron\ssServer\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\Programming\ShadowSquadron\ssServer\obj\x86\Debug\ssServer.Properties.Resources.resources
-D:\Programming\ShadowSquadron\ssServer\obj\x86\Debug\GenerateResource.read.1.tlog
-D:\Programming\ShadowSquadron\ssServer\obj\x86\Debug\GenerateResource.write.1.tlog
-D:\Programming\ShadowSquadron\ssServer\obj\x86\Debug\ssServer.exe
-D:\Programming\ShadowSquadron\ssServer\obj\x86\Debug\ssServer.pdb
-D:\Programming\ShadowSquadron\ssServer\obj\x86\Debug\ssServer.Server.resources

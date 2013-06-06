@@ -4,6 +4,8 @@ Solution:
 
 ssGame is the project specific to Shadow Squadron
 It references GameHelper and WindowsGameLibrary.
+It references JigLib and XnaFramework so that SS specific gobjects to be created in ssGame instead of in the generic GameHelper.
+
 ssGame has forms for the client and server , and a splash screen to pick which to use (for easy development).
 ssGame has game classes for the Client and Server.
 

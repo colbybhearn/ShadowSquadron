@@ -24,7 +24,11 @@ namespace ssGame
 
         private void btnServer_Click(object sender, EventArgs e)
         {
+            GameHelper.Gui.Forms.frmServerBase frm = new GameHelper.Gui.Forms.frmServerBase(new ServerGame());
+            frm.Show();
 
+            //frmServer s = new frmServer();
+            //s.Show();
         }
 
         private void frmSplash_Load(object sender, EventArgs e)

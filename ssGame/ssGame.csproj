@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -48,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets.cs" />
     <Compile Include="frmClient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +63,7 @@
     <Compile Include="frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
+    <Compile Include="PhysicsObjects\EnemyFighter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="frmServer.cs">
@@ -75,6 +78,10 @@
     <ProjectReference Include="..\..\GameLib\GameHelper\GameHelper.csproj">
       <Project>{6A67E9EA-E2AB-47CC-90A5-8E8813084721}</Project>
       <Name>GameHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GameLib\JigLibX 0.3.1\JigLibX\JigLibX.csproj">
+      <Project>{8A7CEF45-3501-491D-AEDA-0164060F5348}</Project>
+      <Name>JigLibX</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GameLib\WindowsGameLibrary\WindowsGameLibrary.csproj">
       <Project>{080DD9B6-4867-457A-9B9B-2400CCD30AAD}</Project>
