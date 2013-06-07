@@ -2,24 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Helper.Objects;
+using GameHelper.Objects;
 using ssGame.PhysicsObjects;
 using Microsoft.Xna.Framework;
-using Helper.Physics.PhysicsObjects;
+using GameHelper.Physics.PhysicsObjects;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ssGame
 {
     class Assets
     {
-        public enum Types
-        {
-            EnemyFighter,
-            EnemyCruiser,
-            EnemyCrystal,
-            Feather1, 
-            Feather2,
-        }
+        
 
         public static Gobject CreateEnemyFighter(Model landerModel)
         {

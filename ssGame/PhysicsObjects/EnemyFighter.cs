@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Helper.Objects;
-using Helper.Physics;
+using GameHelper.Objects;
+using GameHelper.Physics;
 using Microsoft.Xna.Framework;
 using JigLibX.Physics;
 using JigLibX.Geometry;
@@ -40,10 +40,10 @@ namespace ssGame.PhysicsObjects
             PhysicsSystem.CurrentPhysicsSystem.AddController(RotJetZ);
             PhysicsSystem.CurrentPhysicsSystem.AddController(RotJetY);
 
-            actionManager.AddBinding((int)Actions.ThrustUp, new Helper.Input.ActionBindingDelegate(GenericThrustUp), 1);
-            actionManager.AddBinding((int)Actions.Pitch, new Helper.Input.ActionBindingDelegate(GenericPitch), 1);
-            actionManager.AddBinding((int)Actions.Roll, new Helper.Input.ActionBindingDelegate(GenericRoll), 1);
-            actionManager.AddBinding((int)Actions.Yaw, new Helper.Input.ActionBindingDelegate(GenericYaw), 1);
+            actionManager.AddBinding((int)Actions.ThrustUp, new GameHelper.Input.ActionBindingDelegate(GenericThrustUp), 1);
+            actionManager.AddBinding((int)Actions.Pitch, new GameHelper.Input.ActionBindingDelegate(GenericPitch), 1);
+            actionManager.AddBinding((int)Actions.Roll, new GameHelper.Input.ActionBindingDelegate(GenericRoll), 1);
+            actionManager.AddBinding((int)Actions.Yaw, new GameHelper.Input.ActionBindingDelegate(GenericYaw), 1);
         }
 
         public enum Actions

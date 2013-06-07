@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="frmClient.cs">
       <SubType>Form</SubType>
     </Compile>
