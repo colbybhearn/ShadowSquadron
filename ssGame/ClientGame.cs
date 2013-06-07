@@ -52,8 +52,8 @@ namespace ssGame
         public override void InitializeContent()
         {
             base.InitializeContent();
-            LoadModel(modelEnemyFighter, "Airplane", AssetTypes.EnemyFighter, CreateFighter);
-            LoadModel(modelFeatherFighter, "Airplane", AssetTypes.Feather1, CreateFighter);
+            LoadModel(ref modelEnemyFighter, "Airplane", AssetTypes.EnemyFighter, CreateFighter);
+            LoadModel(ref modelFeatherFighter, "Airplane", AssetTypes.Feather1, CreateFighter);
         }
         public override void InitializeCameras()
         {
