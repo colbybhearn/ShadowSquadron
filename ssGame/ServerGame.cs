@@ -22,14 +22,6 @@ namespace ssGame
         public override void InitializeMultiplayer()
         {
             base.InitializeMultiplayer();
-            // TODO: Should client connected and ChatMessage Received be handled elsewhere (not in BaseGame) for the server?
-            commServer.ClientConnected += new Handlers.IntStringEH(commServer_ClientConnected);
-            commServer.ChatMessageReceived += new Handlers.ChatMessageEH(commServer_ChatMessageReceived);
-            commServer.ObjectUpdateReceived += new Handlers.ObjectUpdateEH(commServer_ObjectUpdateReceived);
-            commServer.ObjectActionReceived += new Handlers.ObjectActionEH(commServer_ObjectActionReceived);
-            commServer.ObjectRequestReceived += new Handlers.ObjectRequestEH(commServer_ObjectRequestReceived);
-            commServer.ObjectAttributeReceived += new Handlers.ObjectAttributeEH(commServer_ObjectAttributeReceived);
-            commServer.ClientReadyReceived += new Handlers.IntStringEH(commServer_ClientReadyReceived);
         }
 
         public override void InitializeContent()
@@ -109,7 +101,6 @@ namespace ssGame
 
                 Gobject f = GetEnemyFighter(new Vector3(x, 10, z));
                 physicsManager.AddNewObject(f);
-                //Gobject o = assetManager.GetAssetOfType(AssetTypes.EnemyFighter);
                 
             }
         }
