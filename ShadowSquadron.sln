@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CbhLib", "..\..\cbhlib\CbhLib.csproj", "{D6E954C0-465B-4C25-A2B8-59C2652A57F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CbhLib", "..\cbhlib\CbhLib.csproj", "{D6E954C0-465B-4C25-A2B8-59C2652A57F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameHelper", "..\..\GameLib\GameHelper\GameHelper.csproj", "{6A67E9EA-E2AB-47CC-90A5-8E8813084721}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameHelper", "..\GameLib\GameHelper\GameHelper.csproj", "{6A67E9EA-E2AB-47CC-90A5-8E8813084721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ssGame", "..\ssGame\ssGame.csproj", "{FBB25412-5E4D-4A6E-B6D0-0493A66079BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ssGame", "ssGame\ssGame.csproj", "{FBB25412-5E4D-4A6E-B6D0-0493A66079BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JigLibX", "..\..\GameLib\JigLibX 0.3.1\JigLibX\JigLibX.csproj", "{8A7CEF45-3501-491D-AEDA-0164060F5348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JigLibX", "..\GameLib\JigLibX 0.3.1\JigLibX\JigLibX.csproj", "{8A7CEF45-3501-491D-AEDA-0164060F5348}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGameLibrary", "..\..\GameLib\WindowsGameLibrary\WindowsGameLibrary.csproj", "{080DD9B6-4867-457A-9B9B-2400CCD30AAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGameLibrary", "..\GameLib\WindowsGameLibrary\WindowsGameLibrary.csproj", "{080DD9B6-4867-457A-9B9B-2400CCD30AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "..\..\GameLib\Content\Content.contentproj", "{941ACAF8-8E69-4248-BF23-2D9AABEC068E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "..\GameLib\Content\Content.contentproj", "{941ACAF8-8E69-4248-BF23-2D9AABEC068E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
