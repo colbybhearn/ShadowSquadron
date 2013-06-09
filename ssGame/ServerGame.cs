@@ -35,7 +35,8 @@ namespace ssGame
         public override void InitializeContent()
         {
             base.InitializeContent();
-            LoadModel(ref modelEnemyFighter, "Airplane", AssetTypes.EnemyFighter, CreateFighter);
+            assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter);
+            assetManager.LoadAssets(Content);
         }
 
         public override void InitializeCameras()
@@ -89,7 +90,6 @@ namespace ssGame
         public override void Start()
         {
             base.Start();
-            physicsManager.AddSpheres(1, sphere);
             SpawnFighters();
         }
 
@@ -109,6 +109,7 @@ namespace ssGame
 
                 Gobject f = GetEnemyFighter(new Vector3(x, 10, z));
                 physicsManager.AddNewObject(f);
+                //Gobject o = assetManager.GetAssetOfType(AssetTypes.EnemyFighter);
                 
             }
         }
