@@ -82,11 +82,11 @@ namespace ssGame
         #region CallBacks
         public Gobject CreateFighter()
         {
-            return Assets.CreateEnemyFighter(modelEnemyFighter);
+            return Assets.CreateEnemyFighter();
         }
         public Gobject CreateFeather1()
         {
-            return Assets.CreateEnemyFighter(modelFeatherFighter);
+            return Assets.CreateEnemyFighter();
         }
 
         public void TurnRight()

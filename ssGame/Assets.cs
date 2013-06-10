@@ -14,14 +14,28 @@ namespace ssGame
     {
         
 
-        public static Gobject CreateEnemyFighter(Model landerModel)
+        public static Gobject CreateEnemyFighter()
         {
             Vector3 scale = new Vector3(2, 2, 2);
             EnemyFighter lander = new EnemyFighter(
                 Vector3.Zero,
                 scale,
                 Matrix.Identity,
-                landerModel,
+                null,
+                0
+                );
+
+            return lander;
+        }
+
+        public static Gobject CreateEnemyCruiser()
+        {
+            Vector3 scale = new Vector3(2, 2, 2);
+            EnemyCruiser lander = new EnemyCruiser(
+                Vector3.Zero,
+                scale,
+                Matrix.Identity,
+                null,
                 0
                 );
 

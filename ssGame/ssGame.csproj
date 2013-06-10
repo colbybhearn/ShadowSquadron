@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Controllers\FighterController.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="frmClient.cs">
       <SubType>Form</SubType>
@@ -64,6 +65,7 @@
     <Compile Include="frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
+    <Compile Include="PhysicsObjects\EnemyCruiser.cs" />
     <Compile Include="PhysicsObjects\EnemyFighter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

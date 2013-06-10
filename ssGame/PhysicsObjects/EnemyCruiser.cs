@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ssGame.PhysicsObjects
 {
-    public class EnemyFighter : Gobject
+    public class EnemyCruiser : Gobject
     {
 
         /*
@@ -45,16 +45,7 @@ namespace ssGame.PhysicsObjects
 
         public Modes mode;
 
-        public float MIN_SPEED = .5f;
-        public float MAX_SPEED = 10;
-        public float SpeedTarget = 5;
-        public float SpeedCurrent = 5;
-        public Vector3 PitchYawRoll;
-        //public Quaternion Orientation;
-
-        
-        
-
+        public float NominalSpeed;
 
         BoostController VertJet;
         BoostController RotJetY;
@@ -62,10 +53,8 @@ namespace ssGame.PhysicsObjects
         BoostController RotJetZ;
         const float MAX_VERT_MAGNITUDE=30;
         const float MAX_ROT_JET=10;
-        public Vector3 HeadingTarget = new Vector3(0,0,-1);
-        public Vector3 HeadingCurrent = new Vector3(0,0,-1);
 
-        public EnemyFighter(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
+        public EnemyCruiser(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
             Vector3 sides = new Vector3(1f * scale.X, 1.75f * scale.Y, 1f * scale.Z);
@@ -88,8 +77,6 @@ namespace ssGame.PhysicsObjects
             actionManager.AddBinding((int)Actions.Pitch, new GameHelper.Input.ActionBindingDelegate(GenericPitch), 1);
             actionManager.AddBinding((int)Actions.Roll, new GameHelper.Input.ActionBindingDelegate(GenericRoll), 1);
             actionManager.AddBinding((int)Actions.Yaw, new GameHelper.Input.ActionBindingDelegate(GenericYaw), 1);
-
-            mode = Modes.Patrol;
         }
 
         public enum Actions
@@ -104,6 +91,7 @@ namespace ssGame.PhysicsObjects
         {
             SetVertJetThrust((float)v[0]);
         }
+
 
         private void GenericPitch(object[] v)
         {
@@ -165,25 +153,6 @@ namespace ssGame.PhysicsObjects
             {
                 System.Diagnostics.Debug.WriteLine(E.StackTrace);
             }
-        }
-
-        public void Update()
-        {
-            /*
-             * Controller just needs to set the target(s)
-             * this function determines how to make the current(s) reach those target(s).
-             */
-
-            SpeedCurrent += (SpeedTarget - SpeedCurrent) / 100.0f;
-
-            Quaternion Orientation =
-                Quaternion.CreateFromAxisAngle(Vector3.UnitY, this.PitchYawRoll.Y) *
-                Quaternion.CreateFromAxisAngle(Vector3.UnitX, this.PitchYawRoll.X);
-
-            this.HeadingCurrent = Matrix.CreateFromQuaternion(Orientation).Forward;
-            this.HeadingCurrent.Normalize();
-            this.SetVelocity(this.HeadingCurrent * this.SpeedCurrent);
-            this.Orientation = Matrix.CreateFromQuaternion(Orientation);
         }
     }
 }

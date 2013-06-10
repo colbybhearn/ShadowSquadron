@@ -10,14 +10,14 @@ using GameHelper.Camera.Cameras;
 using Microsoft.Xna.Framework.Input;
 using GameHelper.Objects;
 using Microsoft.Xna.Framework;
+using ssGame.Controllers;
 
 namespace ssGame
 {
     class ServerGame : GameHelper.Base.ServerBase
     {
         List<EnemyFighter> EnemyFighters = new List<EnemyFighter>();
-        Model modelEnemyFighter;
-
+        EnemyCruiser c;
         #region Initialization
         public override void InitializeMultiplayer()
         {
@@ -28,6 +28,7 @@ namespace ssGame
         {
             base.InitializeContent();
             assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter);
+            assetManager.AddAssetType(AssetTypes.EnemyCruiser, CreateCruiser);
             assetManager.LoadAssets(Content);
         }
 
@@ -41,6 +42,7 @@ namespace ssGame
         public override void InitializeEnvironment()
         {
             base.InitializeEnvironment();
+            physicsManager.PhysicsSystem.Gravity= new Vector3(0,0,0);
         }
 
         public override void InitializeInputs()
@@ -82,6 +84,7 @@ namespace ssGame
         public override void Start()
         {
             base.Start();
+            
             SpawnFighters();
         }
 
@@ -89,7 +92,7 @@ namespace ssGame
         {
             Random r = new Random((int)DateTime.Now.ToOADate());
             float x, z;
-            int count = 10;
+            int count = 1;
 
             for (int i = 0; i < count; i++)
             {
@@ -99,20 +102,47 @@ namespace ssGame
                 x = x * 250;
                 z = z * 250;
 
+                c = (EnemyCruiser)GetEnemyCruiser(new Vector3(x+2, 126, z-4));
+                //c.SetVelocity(new Vector3(0, 0, -20f));
+                physicsManager.AddNewObject(c);
+
                 Gobject f = GetEnemyFighter(new Vector3(x, 10, z));
                 physicsManager.AddNewObject(f);
-                
             }
         }
+
         public Gobject CreateFighter()
         {
-            return Assets.CreateEnemyFighter(modelEnemyFighter);
+            return Assets.CreateEnemyFighter();
+        }
+        public Gobject CreateCruiser()
+        {
+            Gobject o = (EnemyCruiser)Assets.CreateEnemyCruiser();
+            o.Scale = new Vector3(2, 2, 2);
+            return o;
+        }
+        private Gobject GetEnemyCruiser(Vector3 pos)
+        {
+            Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyCruiser);
+            o.Position = pos;
+            return o;
         }
         private Gobject GetEnemyFighter(Vector3 pos)
         {
             Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyFighter);            
             o.Position = pos;
             return o;
+        }
+
+        public override void DoAiLogic()
+        {
+            foreach (Gobject go in gameObjects.Values)
+            {
+                if (go is EnemyFighter)
+                {
+                    FighterController.Update(go as EnemyFighter, c, null);
+                }
+            }
         }
 
     }
