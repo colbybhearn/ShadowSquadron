@@ -170,7 +170,7 @@ namespace ssGame.PhysicsObjects
              */
 
             SpeedCurrent += (SpeedTarget - SpeedCurrent) / 100.0f;
-
+            
             YawPitchRoll.X += (float)Math.PI/10000;
 
             Quaternion Orientation = Quaternion.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z);
