@@ -43,6 +43,12 @@ namespace ssGame.PhysicsObjects
             Evade
         }
 
+        public float MIN_SPEED = .5f;
+        public float MAX_SPEED = 10;
+        public float SpeedTarget = 4;
+        public float SpeedCurrent = 6;
+        public Vector3 YawPitchRoll;
+
         public Modes mode;
 
         public float NominalSpeed;
@@ -153,6 +159,29 @@ namespace ssGame.PhysicsObjects
             {
                 System.Diagnostics.Debug.WriteLine(E.StackTrace);
             }
+        }
+
+
+        public void Update()
+        {
+            /*
+             * Controller just needs to set the target(s)
+             * this function determines how to make the current(s) reach those target(s) and apply them.
+             */
+
+            SpeedCurrent += (SpeedTarget - SpeedCurrent) / 100.0f;
+
+            YawPitchRoll.X += (float)Math.PI/10000;
+
+            Quaternion Orientation = Quaternion.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z);
+            Matrix mHeadingCurrent = Matrix.CreateFromQuaternion(Orientation);
+            Vector3 HeadingCurrent = mHeadingCurrent.Forward;
+            HeadingCurrent.Normalize();
+
+
+            // Appy the new current(s)
+            this.SetVelocity(HeadingCurrent * this.SpeedCurrent);
+            this.Orientation = Matrix.CreateFromQuaternion(Orientation);
         }
     }
 }

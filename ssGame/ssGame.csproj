@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Controllers\CruiserController.cs" />
     <Compile Include="Controllers\FighterController.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="frmClient.cs">

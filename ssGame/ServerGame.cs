@@ -92,7 +92,12 @@ namespace ssGame
         {
             Random r = new Random((int)DateTime.Now.ToOADate());
             float x, z;
-            int count = 1;
+            int count = 3;
+            x = 30;
+            z = 30;
+            c = (EnemyCruiser)GetEnemyCruiser(new Vector3(x + 10, 15 + 0, z + 0));
+            //c.SetVelocity(new Vector3(0, 0, -20f));
+            physicsManager.AddNewObject(c);
 
             for (int i = 0; i < count; i++)
             {
@@ -102,12 +107,14 @@ namespace ssGame
                 x = x * 250;
                 z = z * 250;
 
-                c = (EnemyCruiser)GetEnemyCruiser(new Vector3(x+2, 126, z-4));
-                //c.SetVelocity(new Vector3(0, 0, -20f));
-                physicsManager.AddNewObject(c);
 
-                Gobject f = GetEnemyFighter(new Vector3(x, 10, z));
+                //c = (EnemyCruiser)GetEnemyCruiser(new Vector3(x+10, 15+0, z+0));
+                //c.SetVelocity(new Vector3(0, 0, -20f));
+                //physicsManager.AddNewObject(c);
+
+                Gobject f = GetEnemyFighter(new Vector3(x, 15, z));
                 physicsManager.AddNewObject(f);
+
             }
         }
 
@@ -118,7 +125,7 @@ namespace ssGame
         public Gobject CreateCruiser()
         {
             Gobject o = (EnemyCruiser)Assets.CreateEnemyCruiser();
-            o.Scale = new Vector3(2, 2, 2);
+            o.Scale = new Vector3(5, 5, 5);
             return o;
         }
         private Gobject GetEnemyCruiser(Vector3 pos)
@@ -141,6 +148,10 @@ namespace ssGame
                 if (go is EnemyFighter)
                 {
                     FighterController.Update(go as EnemyFighter, c, null);
+                }
+                else if (go is EnemyCruiser)
+                {
+                    CruiserController.Update(go as EnemyCruiser);
                 }
             }
         }

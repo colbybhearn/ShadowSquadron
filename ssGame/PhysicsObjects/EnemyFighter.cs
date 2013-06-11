@@ -47,9 +47,9 @@ namespace ssGame.PhysicsObjects
 
         public float MIN_SPEED = .5f;
         public float MAX_SPEED = 10;
-        public float SpeedTarget = 5;
-        public float SpeedCurrent = 5;
-        public Vector3 PitchYawRoll;
+        public float SpeedTarget = 7;
+        public float SpeedCurrent = 7;
+        public Vector3 YawPitchRoll;
         //public Quaternion Orientation;
 
         
@@ -62,8 +62,9 @@ namespace ssGame.PhysicsObjects
         BoostController RotJetZ;
         const float MAX_VERT_MAGNITUDE=30;
         const float MAX_ROT_JET=10;
-        public Vector3 HeadingTarget = new Vector3(0,0,-1);
+        public Vector3 PositionTarget = new Vector3(0,0,-1);
         public Vector3 HeadingCurrent = new Vector3(0,0,-1);
+        public Vector3 OffsetFromCruiser;
 
         public EnemyFighter(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
@@ -171,17 +172,113 @@ namespace ssGame.PhysicsObjects
         {
             /*
              * Controller just needs to set the target(s)
-             * this function determines how to make the current(s) reach those target(s).
+             * this function determines how to make the current(s) reach those target(s) and apply them.
              */
 
             SpeedCurrent += (SpeedTarget - SpeedCurrent) / 100.0f;
 
-            Quaternion Orientation =
-                Quaternion.CreateFromAxisAngle(Vector3.UnitY, this.PitchYawRoll.Y) *
-                Quaternion.CreateFromAxisAngle(Vector3.UnitX, this.PitchYawRoll.X);
+            //YawPitchRoll.X = 0;// (float)Math.PI;
+            //YawPitchRoll.Y = 0;// (float)Math.PI / 400;
+            //YawPitchRoll.Z = (float)Math.PI/4;
 
-            this.HeadingCurrent = Matrix.CreateFromQuaternion(Orientation).Forward;
+            Quaternion Orientation = Quaternion.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z);
+            Matrix mHeadingCurrent = Matrix.CreateFromQuaternion(Orientation);
+            this.HeadingCurrent = mHeadingCurrent.Forward;
             this.HeadingCurrent.Normalize();
+
+            Vector3 shouldPointToward = this.PositionTarget - this.BodyPosition();
+            shouldPointToward.Normalize();
+            float fwDelta = Vector3.Dot(mHeadingCurrent.Forward, shouldPointToward);
+            float upDelta = Vector3.Dot(mHeadingCurrent.Up, shouldPointToward);
+            float lfDelta = Vector3.Dot(mHeadingCurrent.Left, shouldPointToward);
+            float dnDelta = -upDelta;
+            float rtDelta = -lfDelta;
+            float highest = upDelta;
+
+            
+            int closest = 0;
+            if (lfDelta > highest)
+            {
+                highest = lfDelta;
+                closest = 1;
+            }
+            if (dnDelta > highest)
+            {
+                highest = dnDelta;
+                closest = 2;
+            }
+            if (rtDelta > highest)
+            {
+                highest = rtDelta;
+                closest = 3;
+            }
+
+            // applying this is a matter of local vs. world coordinates.
+
+            //switch (closest)
+            //{
+            //    case 0:
+            //        Matrix top = Matrix.CreateRotationX((float)Math.PI/20.0f);
+            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, top);
+            //        YawPitchRoll = mHeadingCurrent.Forward;
+            //        break;
+            //    case 1:
+            //        Matrix left = Matrix.CreateRotationY((float)Math.PI/20.0f);
+            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, left);
+            //        YawPitchRoll = mHeadingCurrent.Forward;
+            //        break;
+            //    case 2:
+            //        Matrix bot = Matrix.CreateRotationX((float)Math.PI / 20.0f);
+            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, bot);
+            //        YawPitchRoll = mHeadingCurrent.Forward;
+            //        break;
+            //    case 3:
+            //        Matrix right = Matrix.CreateRotationY((float)Math.PI / 20.0f);
+            //        //Quaternion qrt = Quaternion.CreateFromRotationMatrix(right);
+                    
+            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, right);
+            //        YawPitchRoll = mHeadingCurrent.Forward;
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+
+            float turnRate = (float)Math.PI/100;
+            turnRate *= (1.0f - fwDelta);
+            
+            switch (closest)
+            {
+                case 0:
+                    YawPitchRoll.Y += turnRate;
+                    break;
+                case 1:
+                    YawPitchRoll.X += turnRate;
+                    break;
+                case 2:
+                    YawPitchRoll.Y -= turnRate;
+                    break;
+                case 3:
+                    YawPitchRoll.X -= turnRate;
+                    break;
+                default:
+                    break;
+            }
+
+            Orientation =
+            Quaternion.CreateFromAxisAngle(Vector3.UnitY, YawPitchRoll.X) *
+            Quaternion.CreateFromAxisAngle(Vector3.UnitX, YawPitchRoll.Y);
+
+            mHeadingCurrent = Matrix.CreateFromQuaternion(Orientation);
+            //Orientation = Quaternion.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z);
+
+            // rotate, pull up , un-rotate
+            // turn any way (whether by pitch or yaw, or combo) to head towards the heading.
+            // how do I know from update to update what consistent decision to make ? > calculations should answer this.
+
+
+
+            // Appy the new current(s)
             this.SetVelocity(this.HeadingCurrent * this.SpeedCurrent);
             this.Orientation = Matrix.CreateFromQuaternion(Orientation);
         }

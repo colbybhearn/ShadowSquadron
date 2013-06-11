@@ -32,22 +32,43 @@ namespace ssGame.Controllers
         * 
         */
 
-        static float PatrolRange = 19.0f;
+        static float PatrolRange = 20.0f;
         static float EngageRange = 40.0f;
+        static float TargetPositionRange = 2;
+        
+        static Random r = new Random();
 
         public static void Update(EnemyFighter fighter, Gobject cruiser, Gobject player)
         {
             switch (fighter.mode)
             {
                 case EnemyFighter.Modes.Patrol:
-                    // stay in range
-                    if (!IsNearCuiser(fighter, cruiser))
+                    fighter.PositionTarget = cruiser.BodyPosition() + fighter.OffsetFromCruiser;
+                    // if we are near our destination
+                    if (IsNearTargetPosition(fighter, cruiser as EnemyCruiser))
                     {
-                        // redirect heading toward the cruiser
-                        fighter.HeadingTarget = cruiser.BodyPosition() - fighter.BodyPosition();
-                        fighter.HeadingTarget.Normalize();
+                        float scale = 25;
+                        float bubblesize = 10;
+
+
+                        fighter.OffsetFromCruiser = new Vector3((float)r.NextDouble() - .5f, (float)r.NextDouble() - .5f, (float)r.NextDouble() - .5f);
+                        fighter.OffsetFromCruiser *= scale;
+                        Vector3 dir = Vector3.Normalize(fighter.OffsetFromCruiser);
+                        fighter.OffsetFromCruiser += (dir * bubblesize);
                         
+                        // stay in range of the cruiser
+                        if (IsNearCuiser(fighter, cruiser))
+                        {
+                            
+                        }
+                        else
+                        { 
+
+                        }
                     }
+
+                    // this should really be picking a heading.
+                    // what heading we pick depends on the environment.
 
                     // if targets, attack
                     if (isTargetNear(fighter, player))
@@ -94,41 +115,8 @@ namespace ssGame.Controllers
                     break;
             }
 
-
-
-            //if (fighter.BodyVelocity().Length() < fighter.NominalSpeed)
-                //fighter.SetVelocity(new Vector3(0, 0, -fighter.NominalSpeed));
-
-            float hDelta = Vector3.Dot(fighter.HeadingTarget, fighter.HeadingCurrent);
-            if (hDelta > .5)
-                fighter.SpeedTarget = fighter.MAX_SPEED;
-            else if (hDelta > 0)
-                fighter.SpeedTarget = (fighter.MAX_SPEED - fighter.MIN_SPEED) / 2;
-            else
-                fighter.SpeedTarget = fighter.MIN_SPEED;
-
-            //if (hDelta <= 1 && hDelta >0)
-            //{
-            //    Vector3 diff = fighter.HeadingTarget - fighter.HeadingCurrent;
-            //    fighter.HeadingCurrent += diff / 10.0f;
-            //}
-            //else
-            //{
-            if (hDelta < 1 && hDelta > .5)
-            {
-
-            }
-            else
-            {
-                
-                fighter.PitchYawRoll.X += .005f;
-                //fighter.PitchYawRoll = Vector3.Clamp(fighter.PitchYawRoll, new Vector3(-1.57f, float.MinValue, float.MinValue), new Vector3(1.57f, float.MaxValue, float.MaxValue));
-
-            }
             fighter.Update();
             
-            // apply self-preservation logic
-
         }
 
 
@@ -153,6 +141,14 @@ namespace ssGame.Controllers
 
         public static bool hitRecently()
         {
+            return false;
+        }
+
+        public static bool IsNearTargetPosition(EnemyFighter fighter, EnemyCruiser cruiser)
+        {
+            float dist = Vector3.Distance(fighter.BodyPosition(), cruiser.BodyPosition() + fighter.OffsetFromCruiser);
+            if (dist < TargetPositionRange)
+                return true;
             return false;
         }
 
