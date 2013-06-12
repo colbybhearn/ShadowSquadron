@@ -1,6 +1,6 @@
 <AssetConfig>
 <AssetName>CruiserA</AssetName>
 <AssetTypeName>EnemyCruiser</AssetTypeName>
-<FbxModelFilepath>D:\Programming\ShadowSquadron\ssGame\bin\Debug\Assets\Airplane.fbx</FbxModelFilepath>
+<FbxModelFilepath>Assets\Airplane.fbx</FbxModelFilepath>
 <Params></Params>
 </AssetConfig>
