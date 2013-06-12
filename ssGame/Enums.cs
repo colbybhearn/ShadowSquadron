@@ -11,8 +11,7 @@ namespace ssGame
         EnemyFighter,
         EnemyCruiser,
         EnemyCrystal,
-        Feather1,
-        Feather2,
+        Feather,
     }
 
     public enum CameraModes

@@ -45,23 +45,15 @@ namespace ssGame.PhysicsObjects
 
         public Modes mode;
 
-        public float MIN_SPEED = .5f;
-        public float MAX_SPEED = 10;
+        public float SPEED_MIN = .5f;
+        public float SPEED_MAX = 10;
         public float SpeedTarget = 7;
         public float SpeedCurrent = 7;
+
+
         public Vector3 YawPitchRoll;
-        //public Quaternion Orientation;
 
         
-        
-
-
-        BoostController VertJet;
-        BoostController RotJetY;
-        BoostController RotJetX;
-        BoostController RotJetZ;
-        const float MAX_VERT_MAGNITUDE=30;
-        const float MAX_ROT_JET=10;
         public Vector3 PositionTarget = new Vector3(0,0,-1);
         public Vector3 HeadingCurrent = new Vector3(0,0,-1);
         public Vector3 OffsetFromCruiser;
@@ -75,21 +67,6 @@ namespace ssGame.PhysicsObjects
             Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(position, scale / 2, model, true, asset);
 
-            VertJet = new BoostController(Body, Vector3.Up, Vector3.Zero);
-            RotJetX = new BoostController(Body, Vector3.Zero, Vector3.UnitZ);
-            RotJetZ = new BoostController(Body, Vector3.Zero, Vector3.UnitX);
-            RotJetY = new BoostController(Body, Vector3.Zero, Vector3.UnitY);
-
-            PhysicsSystem.CurrentPhysicsSystem.AddController(VertJet);
-            PhysicsSystem.CurrentPhysicsSystem.AddController(RotJetX);
-            PhysicsSystem.CurrentPhysicsSystem.AddController(RotJetZ);
-            PhysicsSystem.CurrentPhysicsSystem.AddController(RotJetY);
-
-            actionManager.AddBinding((int)Actions.ThrustUp, new GameHelper.Input.ActionBindingDelegate(GenericThrustUp), 1);
-            actionManager.AddBinding((int)Actions.Pitch, new GameHelper.Input.ActionBindingDelegate(GenericPitch), 1);
-            actionManager.AddBinding((int)Actions.Roll, new GameHelper.Input.ActionBindingDelegate(GenericRoll), 1);
-            actionManager.AddBinding((int)Actions.Yaw, new GameHelper.Input.ActionBindingDelegate(GenericYaw), 1);
-
             mode = Modes.Patrol;
         }
 
@@ -99,58 +76,6 @@ namespace ssGame.PhysicsObjects
             Roll,
             Pitch,
             Yaw
-        }
-
-        private void GenericThrustUp(object[] v)
-        {
-            SetVertJetThrust((float)v[0]);
-        }
-
-        private void GenericPitch(object[] v)
-        {
-            SetRotJetXThrust((float)v[0]);
-        }
-
-        private void GenericRoll(object[] v)
-        {
-            SetRotJetZThrust((float)v[0]);
-        }
-
-        private void GenericYaw(object[] v)
-        {
-            SetRotJetYThrust((float)v[0]);
-        }
-
-        public void SetVertJetThrust(float v)
-        {
-            VertJet.SetForceMagnitude(v * MAX_VERT_MAGNITUDE);
-            actionManager.SetActionValues((int)Actions.ThrustUp, new object[] { v });
-        }
-
-        public void SetRotJetXThrust(float v)
-        {
-            RotJetX.SetTorqueMagnitude(v * MAX_ROT_JET);
-            actionManager.SetActionValues((int)Actions.Pitch, new object[] { v });
-        }
-
-        public void SetRotJetZThrust(float v)
-        {
-            RotJetZ.SetTorqueMagnitude(v * MAX_ROT_JET);
-            actionManager.SetActionValues((int)Actions.Roll, new object[] { v });
-        }
-
-        public void SetRotJetYThrust(float v)
-        {
-            RotJetY.SetTorqueMagnitude(v * MAX_ROT_JET);
-            actionManager.SetActionValues((int)Actions.Yaw, new object[] { v });
-        }
-
-        public override void SetNominalInput()
-        {
-            SetVertJetThrust(0);
-            SetRotJetXThrust(0);
-            SetRotJetYThrust(0);
-            SetRotJetZThrust(0);
         }
 
         public override void FinalizeBody()
@@ -213,37 +138,6 @@ namespace ssGame.PhysicsObjects
                 closest = 3;
             }
 
-            // applying this is a matter of local vs. world coordinates.
-
-            //switch (closest)
-            //{
-            //    case 0:
-            //        Matrix top = Matrix.CreateRotationX((float)Math.PI/20.0f);
-            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, top);
-            //        YawPitchRoll = mHeadingCurrent.Forward;
-            //        break;
-            //    case 1:
-            //        Matrix left = Matrix.CreateRotationY((float)Math.PI/20.0f);
-            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, left);
-            //        YawPitchRoll = mHeadingCurrent.Forward;
-            //        break;
-            //    case 2:
-            //        Matrix bot = Matrix.CreateRotationX((float)Math.PI / 20.0f);
-            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, bot);
-            //        YawPitchRoll = mHeadingCurrent.Forward;
-            //        break;
-            //    case 3:
-            //        Matrix right = Matrix.CreateRotationY((float)Math.PI / 20.0f);
-            //        //Quaternion qrt = Quaternion.CreateFromRotationMatrix(right);
-                    
-            //        mHeadingCurrent = Matrix.Multiply(mHeadingCurrent, right);
-            //        YawPitchRoll = mHeadingCurrent.Forward;
-            //        break;
-            //    default:
-            //        break;
-            //}
-
-
             float turnRate = (float)Math.PI/100;
             turnRate *= (1.0f - fwDelta);
             
@@ -275,7 +169,6 @@ namespace ssGame.PhysicsObjects
             // rotate, pull up , un-rotate
             // turn any way (whether by pitch or yaw, or combo) to head towards the heading.
             // how do I know from update to update what consistent decision to make ? > calculations should answer this.
-
 
 
             // Appy the new current(s)

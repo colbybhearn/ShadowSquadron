@@ -18,6 +18,7 @@ namespace ssGame
     {
         List<EnemyFighter> EnemyFighters = new List<EnemyFighter>();
         EnemyCruiser c;
+        Feather feather;
         #region Initialization
         public override void InitializeMultiplayer()
         {
@@ -29,6 +30,7 @@ namespace ssGame
             base.InitializeContent();
             assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter);
             assetManager.AddAssetType(AssetTypes.EnemyCruiser, CreateCruiser);
+            assetManager.AddAssetType(AssetTypes.Feather, CreateFeather);
             assetManager.LoadAssets(Content);
         }
 
@@ -48,7 +50,9 @@ namespace ssGame
         public override void InitializeInputs()
         {
             base.InitializeInputs();
+
             inputManager.EnableKeyMap(GenericInputGroups.Camera.ToString());
+            inputManager.EnableKeyMap("flight");
         }
 
         public override GameHelper.Input.KeyMapCollection GetDefaultControls()
@@ -77,6 +81,15 @@ namespace ssGame
             cameraDefaults.Add(new KeyBinding("Toggle Physics Debug", Keys.F2, false, false, false, KeyEvent.Pressed, TogglePhsyicsDebug));
             KeyMap camControls = new KeyMap(GenericInputGroups.Camera.ToString(), cameraDefaults);
             kmc.AddMap(camControls);
+
+            List<KeyBinding> flightDefaults = new List<KeyBinding>();
+            flightDefaults.Add(new KeyBinding("Forward", Keys.W, false, false, false, KeyEvent.Down, FeatherPitchDown));
+            flightDefaults.Add(new KeyBinding("Left", Keys.A, false, false, false, KeyEvent.Down, FeatherRollLeft));
+            flightDefaults.Add(new KeyBinding("Backward", Keys.S, false, false, false, KeyEvent.Down, FeatherPitchUp));
+            flightDefaults.Add(new KeyBinding("Right", Keys.D, false, false, false, KeyEvent.Down, FeatherRollRight));
+            KeyMap flightControls = new KeyMap("flight", flightDefaults);
+            kmc.AddMap(flightControls);
+
             return kmc;
         }
         #endregion
@@ -84,11 +97,17 @@ namespace ssGame
         public override void Start()
         {
             base.Start();
-            
-            SpawnFighters();
+            SpawnFeather();
+            SpawnEnemies();
         }
 
-        private void SpawnFighters()
+        private void SpawnFeather()
+        {
+            feather = (Feather)GetFeather(new Vector3(0, 0, 0));
+            physicsManager.AddNewObject(feather);
+        }
+
+        private void SpawnEnemies()
         {
             Random r = new Random((int)DateTime.Now.ToOADate());
             float x, z;
@@ -107,25 +126,30 @@ namespace ssGame
                 x = x * 250;
                 z = z * 250;
 
-
-                //c = (EnemyCruiser)GetEnemyCruiser(new Vector3(x+10, 15+0, z+0));
-                //c.SetVelocity(new Vector3(0, 0, -20f));
-                //physicsManager.AddNewObject(c);
-
                 Gobject f = GetEnemyFighter(new Vector3(x, 15, z));
                 physicsManager.AddNewObject(f);
 
             }
         }
 
+        public Gobject CreateFeather()
+        {
+            return Assets.CreateFeather();
+        }
         public Gobject CreateFighter()
         {
-            return Assets.CreateEnemyFighter();
+            return Assets.CreateFighter();
         }
         public Gobject CreateCruiser()
         {
-            Gobject o = (EnemyCruiser)Assets.CreateEnemyCruiser();
+            Gobject o = (EnemyCruiser)Assets.CreateCruiser();
             o.Scale = new Vector3(5, 5, 5);
+            return o;
+        }
+        private Gobject GetFeather(Vector3 pos)
+        {
+            Gobject o = assetManager.GetNewInstance(AssetTypes.Feather);
+            o.Position = pos;
             return o;
         }
         private Gobject GetEnemyCruiser(Vector3 pos)
@@ -141,6 +165,31 @@ namespace ssGame
             return o;
         }
 
+        public void FeatherPitchUp()
+        {
+            if (feather != null)
+                feather.PitchUp();
+        }
+
+        public void FeatherPitchDown()
+        {
+            if (feather != null)
+                feather.PitchDown();
+        }
+
+        public void FeatherRollLeft()
+        {
+            if (feather != null)
+                feather.RollLeft();
+        }
+
+        public void FeatherRollRight()
+        {
+            if (feather != null)
+                feather.RollRight();
+        }
+        
+
         public override void DoAiLogic()
         {
             foreach (Gobject go in gameObjects.Values)
@@ -153,8 +202,12 @@ namespace ssGame
                 {
                     CruiserController.Update(go as EnemyCruiser);
                 }
+                else if (go is Feather)
+                {
+                    Feather f = go as Feather;
+                    f.Update();
+                }
             }
         }
-
     }
 }

@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="PhysicsObjects\EnemyCruiser.cs" />
     <Compile Include="PhysicsObjects\EnemyFighter.cs" />
+    <Compile Include="PhysicsObjects\Feather.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="frmServer.cs">

@@ -14,10 +14,10 @@ namespace ssGame
     {
         
 
-        public static Gobject CreateEnemyFighter()
+        public static Gobject CreateFighter()
         {
             Vector3 scale = new Vector3(2, 2, 2);
-            EnemyFighter lander = new EnemyFighter(
+            EnemyFighter f = new EnemyFighter(
                 Vector3.Zero,
                 scale,
                 Matrix.Identity,
@@ -25,13 +25,13 @@ namespace ssGame
                 0
                 );
 
-            return lander;
+            return f;
         }
 
-        public static Gobject CreateEnemyCruiser()
+        public static Gobject CreateCruiser()
         {
             Vector3 scale = new Vector3(2, 2, 2);
-            EnemyCruiser lander = new EnemyCruiser(
+            EnemyCruiser c = new EnemyCruiser(
                 Vector3.Zero,
                 scale,
                 Matrix.Identity,
@@ -39,7 +39,21 @@ namespace ssGame
                 0
                 );
 
-            return lander;
+            return c;
+        }
+
+        public static Gobject CreateFeather()
+        {
+            Vector3 scale = new Vector3(2, 2, 2);
+            Feather f = new Feather(
+                Vector3.Zero,
+                scale,
+                Matrix.Identity,
+                null,
+                0
+                );
+
+            return f;
         }
     }
 }
