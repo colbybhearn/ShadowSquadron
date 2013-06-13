@@ -7,18 +7,19 @@ using Microsoft.Xna.Framework;
 using JigLibX.Geometry;
 using JigLibX.Collision;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace ssGame.PhysicsObjects
 {
     public class Feather : Gobject
     {
         public float SPEED_MIN = .5f;
-        public float SPEED_MAX = 10;
+        public float SPEED_MAX = 15;
         public float SpeedTarget = 7;
-        public float SpeedCurrent = 7;
+        public float SpeedCurrent = 1;
         public float SpeedChangeRate = 1;
         public Vector3 YawPitchRoll;
-        public Vector3 YawPitchRollRate = new Vector3((float)Math.PI / 2000.0f, (float)Math.PI / 2000.0f, (float)Math.PI / 2000.0f);
+        public Vector3 YawPitchRollRate = new Vector3((float)Math.PI / 10000.0f, (float)Math.PI / 10000.0f, (float)Math.PI / 10000.0f);
         public Vector3 HeadingCurrent = new Vector3(0, 0, -1);
         public Vector3 OffsetFromCruiser;
 
@@ -44,20 +45,20 @@ namespace ssGame.PhysicsObjects
         public void IncreseSpeed()
         {
             SpeedTarget += SpeedChangeRate;
-            Microsoft.Xna.Framework.MathHelper.Clamp(SpeedTarget, SPEED_MIN, SPEED_MAX);
+            SpeedTarget = Microsoft.Xna.Framework.MathHelper.Clamp(SpeedTarget, SPEED_MIN, SPEED_MAX);
         }
         public void DecreaseSpeed()
         {
             SpeedTarget -= SpeedChangeRate;
-            Microsoft.Xna.Framework.MathHelper.Clamp(SpeedTarget, SPEED_MIN, SPEED_MAX);
+            SpeedTarget = Microsoft.Xna.Framework.MathHelper.Clamp(SpeedTarget, SPEED_MIN, SPEED_MAX);
         }
         public void RollLeft()
         {
-            YawPitchRoll.Z += YawPitchRollRate.Z;
+            YawPitchRoll.Z -= YawPitchRollRate.Z;
         }
         public void RollRight()
         {
-            YawPitchRoll.Z -= YawPitchRollRate.Z;
+            YawPitchRoll.Z += YawPitchRollRate.Z;
         }
         public void PitchUp()
         {
@@ -92,22 +93,25 @@ namespace ssGame.PhysicsObjects
 
         public void Update()
         {
-            //SpeedCurrent += (SpeedTarget - SpeedCurrent) / 100.0f;
+            SpeedCurrent += (SpeedTarget - SpeedCurrent) / 100.0f;
             //Quaternion Orientation = Quaternion.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z);
             //Quaternion Orientation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, YawPitchRoll.Z) * Quaternion.CreateFromAxisAngle(Vector3.UnitX, YawPitchRoll.Y);
             //Quaternion Orientation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, YawPitchRoll.Y) * Quaternion.CreateFromAxisAngle(Vector3.UnitZ, YawPitchRoll.Z);
 
             Matrix current = Orientation;
             //strange ness
-            Orientation *= Matrix.CreateFromAxisAngle(current.Forward, YawPitchRoll.Z);
-            Orientation *= Matrix.CreateFromAxisAngle(current.Right, YawPitchRoll.Y);
+            
+            Orientation *= Matrix.CreateFromAxisAngle(Vector3.Normalize(current.Forward), YawPitchRoll.Z);
+            Orientation *= Matrix.CreateFromAxisAngle(Vector3.Normalize(current.Right), YawPitchRoll.Y);
+            //Debug.WriteLine(YawPitchRoll.Z);
+            //this.Body.Orientation.Translation = current.Translation;
             YawPitchRoll = new Vector3(0, 0, 0);
 
             //HeadingCurrent = Orientation.Forward;
             //HeadingCurrent.Normalize();
 
             // Appy the new current(s)
-            //this.SetVelocity(this.HeadingCurrent * this.SpeedCurrent);
+            this.SetVelocity(Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent);
             //this.Orientation = Matrix.CreateFromQuaternion(Orientation);
         }
     }

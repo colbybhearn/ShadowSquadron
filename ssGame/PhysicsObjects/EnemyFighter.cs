@@ -61,10 +61,10 @@ namespace ssGame.PhysicsObjects
         public EnemyFighter(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
-            Vector3 sides = new Vector3(1f * scale.X, 1.75f * scale.Y, 1f * scale.Z);
+            Vector3 sides = new Vector3(.4f * scale.X, .15f * scale.Y, .5f * scale.Z);
             Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
-            sides = new Vector3(scale.X * 2.1f, scale.Y * 1.15f, scale.Z * 2.1f);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
+            //sides = new Vector3(scale.X * 2.1f, scale.Y * 1.15f, scale.Z * 2.1f);
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(position, scale / 2, model, true, asset);
 
             mode = Modes.Patrol;

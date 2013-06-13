@@ -20,6 +20,10 @@ namespace ssGame
         EnemyCruiser c;
         Feather feather;
         #region Initialization
+        public ServerGame() : base()
+        {
+            this.BackColor = Color.Black;
+        }
         public override void InitializeMultiplayer()
         {
             base.InitializeMultiplayer();
@@ -87,6 +91,8 @@ namespace ssGame
             flightDefaults.Add(new KeyBinding("Left", Keys.A, false, false, false, KeyEvent.Down, FeatherRollLeft));
             flightDefaults.Add(new KeyBinding("Backward", Keys.S, false, false, false, KeyEvent.Down, FeatherPitchUp));
             flightDefaults.Add(new KeyBinding("Right", Keys.D, false, false, false, KeyEvent.Down, FeatherRollRight));
+            flightDefaults.Add(new KeyBinding("Accelerate", Keys.OemPlus, false, false, false, KeyEvent.Down, FeatherAccelerate));
+            flightDefaults.Add(new KeyBinding("Decelerate", Keys.OemMinus, false, false, false, KeyEvent.Down, FeatherDecelerate));
             KeyMap flightControls = new KeyMap("flight", flightDefaults);
             kmc.AddMap(flightControls);
 
@@ -160,9 +166,22 @@ namespace ssGame
         }
         private Gobject GetEnemyFighter(Vector3 pos)
         {
-            Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyFighter);            
+            Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyFighter);
+            o.Scale = new Vector3(.1f, .1f, .1f);
             o.Position = pos;
             return o;
+        }
+
+        public void FeatherAccelerate()
+        {
+            if (feather != null)
+                feather.IncreseSpeed();
+        }
+
+        public void FeatherDecelerate()
+        {
+            if (feather != null)
+                feather.DecreaseSpeed();
         }
 
         public void FeatherPitchUp()
