@@ -1,0 +1,10 @@
+<AssetConfig>
+<AssetName>Feather1</AssetName>
+<AssetTypeName>Feather</AssetTypeName>
+<FbxModelFilepath>Assets\Airplane.fbx</FbxModelFilepath>
+<Params>
+	<YawRate>.1</YawRate>
+	<PitchRate>.1</PitchRate>
+	<RollRate>.1</RollRate>
+</Params>
+</AssetConfig>
