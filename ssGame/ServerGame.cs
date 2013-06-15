@@ -97,6 +97,7 @@ namespace ssGame
             flightControls.AddKeyBinding(new KeyBinding("Right", Keys.D, KeyEvent.Down, FeatherRollRight));
             flightControls.AddKeyBinding(new KeyBinding("Accelerate", Keys.OemPlus, KeyEvent.Down, FeatherAccelerate));
             flightControls.AddKeyBinding(new KeyBinding("Decelerate", Keys.OemMinus, KeyEvent.Down, FeatherDecelerate));
+            flightControls.AddKeyBinding(new KeyBinding("Fire", Keys.Space, KeyEvent.Pressed, FeatherFire));
 
             kmc.AddMap(flightControls);
 
