@@ -41,7 +41,11 @@ namespace ssGame.PhysicsObjects
             Pitch,
             Yaw
         }
-
+        public Vector3 BeamSpawnLocation()
+        {
+            Vector3 pos = this.BodyPosition() + Vector3.Normalize(Orientation.Forward) * 10;
+            return pos;
+        }
         public void IncreseSpeed()
         {
             SpeedTarget += SpeedChangeRate;
@@ -99,16 +103,10 @@ namespace ssGame.PhysicsObjects
             //Quaternion Orientation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, YawPitchRoll.Y) * Quaternion.CreateFromAxisAngle(Vector3.UnitZ, YawPitchRoll.Z);
 
             Matrix current = Orientation;
-            //strange ness
             
             Orientation *= Matrix.CreateFromAxisAngle(Vector3.Normalize(current.Forward), YawPitchRoll.Z);
             Orientation *= Matrix.CreateFromAxisAngle(Vector3.Normalize(current.Right), YawPitchRoll.Y);
-            //Debug.WriteLine(YawPitchRoll.Z);
-            //this.Body.Orientation.Translation = current.Translation;
             YawPitchRoll = new Vector3(0, 0, 0);
-
-            //HeadingCurrent = Orientation.Forward;
-            //HeadingCurrent.Normalize();
 
             // Appy the new current(s)
             this.SetVelocity(Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent);

@@ -66,6 +66,7 @@
     <Compile Include="frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
+    <Compile Include="PhysicsObjects\Beam.cs" />
     <Compile Include="PhysicsObjects\EnemyCruiser.cs" />
     <Compile Include="PhysicsObjects\EnemyFighter.cs" />
     <Compile Include="PhysicsObjects\Feather.cs" />
