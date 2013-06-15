@@ -90,7 +90,6 @@ namespace ssGame
 
             kmc.AddMap(camControls);
 
-<<<<<<< HEAD
             KeyMap flightControls = new KeyMap("flight");
             flightControls.AddKeyBinding(new KeyBinding("Forward", Keys.W, KeyEvent.Down, FeatherPitchDown));
             flightControls.AddKeyBinding(new KeyBinding("Left", Keys.A, KeyEvent.Down, FeatherRollLeft));
@@ -99,17 +98,6 @@ namespace ssGame
             flightControls.AddKeyBinding(new KeyBinding("Accelerate", Keys.OemPlus, KeyEvent.Down, FeatherAccelerate));
             flightControls.AddKeyBinding(new KeyBinding("Decelerate", Keys.OemMinus, KeyEvent.Down, FeatherDecelerate));
 
-=======
-            List<KeyBinding> flightDefaults = new List<KeyBinding>();
-            flightDefaults.Add(new KeyBinding("Forward", Keys.W, false, false, false, KeyEvent.Down, FeatherPitchDown));
-            flightDefaults.Add(new KeyBinding("Left", Keys.A, false, false, false, KeyEvent.Down, FeatherRollLeft));
-            flightDefaults.Add(new KeyBinding("Backward", Keys.S, false, false, false, KeyEvent.Down, FeatherPitchUp));
-            flightDefaults.Add(new KeyBinding("Right", Keys.D, false, false, false, KeyEvent.Down, FeatherRollRight));
-            flightDefaults.Add(new KeyBinding("Accelerate", Keys.OemPlus, false, false, false, KeyEvent.Down, FeatherAccelerate));
-            flightDefaults.Add(new KeyBinding("Decelerate", Keys.OemMinus, false, false, false, KeyEvent.Down, FeatherDecelerate));
-            flightDefaults.Add(new KeyBinding("Fire", Keys.Space, false, false, false, KeyEvent.Pressed, FeatherFire));
-            KeyMap flightControls = new KeyMap("flight", flightDefaults);
->>>>>>> 10801d8beb51906509b65ed2374081668a737515
             kmc.AddMap(flightControls);
 
             return kmc;
@@ -191,12 +179,8 @@ namespace ssGame
             o.Position = pos;
             return o;
         }
-<<<<<<< HEAD
-        private Gobject GetEnemyFighter(Vector3 pos)
-=======
 
         private Gobject GetEnemyFighter(Vector3 pos)
->>>>>>> 10801d8beb51906509b65ed2374081668a737515
         {
             Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyFighter);
             o.Scale = new Vector3(.1f, .1f, .1f);
