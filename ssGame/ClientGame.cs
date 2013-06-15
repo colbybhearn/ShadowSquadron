@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using GameHelper.Camera.Cameras;
 using GameHelper.Input;
-using GameHelper.Physics.PhysicsObjects;
 using GameHelper.Objects;
-using ssGame.PhysicsObjects;
 using Microsoft.Xna.Framework.Graphics;
-using GameHelper.Camera.Cameras;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace ssGame
 {
@@ -18,31 +13,30 @@ namespace ssGame
         Model modelEnemyFighter;
         Model modelFeatherFighter;
 
-        public override GameHelper.Input.KeyMapCollection GetDefaultControls()
+        public override KeyMapCollection GetDefaultControls()
         {
             KeyMapCollection kmc = new KeyMapCollection();
             List<KeyBinding> flight = new List<KeyBinding>();
-            flight.Add(new KeyBinding("right", Keys.D, false, false, false, KeyEvent.Down, TurnRight));
+            flight.Add(new KeyBinding("right", Keys.D, KeyEvent.Down, TurnRight));
             KeyMap map = new KeyMap("flight", flight);
             kmc.AddMap(map);
 
             //Camera
-            List<KeyBinding> cameraDefaults = new List<KeyBinding>();
-            cameraDefaults.Add(new KeyBinding("Forward", Keys.NumPad8, false, false, false, KeyEvent.Down, CameraMoveForward));
-            cameraDefaults.Add(new KeyBinding("Left", Keys.NumPad4, false, false, false, KeyEvent.Down, CameraMoveLeft));
-            cameraDefaults.Add(new KeyBinding("Backward", Keys.NumPad5, false, false, false, KeyEvent.Down, CameraMoveBackward));
-            cameraDefaults.Add(new KeyBinding("Right", Keys.NumPad6, false, false, false, KeyEvent.Down, CameraMoveRight));
-            cameraDefaults.Add(new KeyBinding("Speed Increase", Keys.NumPad7, false, false, false, KeyEvent.Pressed, CameraMoveSpeedIncrease));
-            cameraDefaults.Add(new KeyBinding("Speed Decrease", Keys.NumPad1, false, false, false, KeyEvent.Pressed, CameraMoveSpeedDecrease));
-            cameraDefaults.Add(new KeyBinding("Height Increase", Keys.NumPad9, false, false, false, KeyEvent.Down, CameraMoveHeightIncrease));
-            cameraDefaults.Add(new KeyBinding("Height Decrease", Keys.NumPad3, false, false, false, KeyEvent.Down, CameraMoveHeightDecrease));
+            KeyMap camControls = new KeyMap(GenericInputGroups.Camera.ToString());
+            camControls.AddKeyBinding(new KeyBinding("Forward", Keys.NumPad8, KeyEvent.Down, CameraMoveForward));
+            camControls.AddKeyBinding(new KeyBinding("Left", Keys.NumPad4, KeyEvent.Down, CameraMoveLeft));
+            camControls.AddKeyBinding(new KeyBinding("Backward", Keys.NumPad5, KeyEvent.Down, CameraMoveBackward));
+            camControls.AddKeyBinding(new KeyBinding("Right", Keys.NumPad6, KeyEvent.Down, CameraMoveRight));
+            camControls.AddKeyBinding(new KeyBinding("Speed Increase", Keys.NumPad7, KeyEvent.Pressed, CameraMoveSpeedIncrease));
+            camControls.AddKeyBinding(new KeyBinding("Speed Decrease", Keys.NumPad1, KeyEvent.Pressed, CameraMoveSpeedDecrease));
+            camControls.AddKeyBinding(new KeyBinding("Height Increase", Keys.NumPad9, KeyEvent.Down, CameraMoveHeightIncrease));
+            camControls.AddKeyBinding(new KeyBinding("Height Decrease", Keys.NumPad3, KeyEvent.Down, CameraMoveHeightDecrease));
 
-            cameraDefaults.Add(new KeyBinding("Change Mode", Keys.Decimal, false, false, false, KeyEvent.Pressed, CameraModeCycle));
-            cameraDefaults.Add(new KeyBinding("Home", Keys.Multiply, false, false, false, KeyEvent.Pressed, CameraMoveHome));
-            //
-            cameraDefaults.Add(new KeyBinding("Toggle Debug Info", Keys.F1, false, false, false, KeyEvent.Pressed, ToggleDebugInfo));
-            cameraDefaults.Add(new KeyBinding("Toggle Physics Debug", Keys.F2, false, false, false, KeyEvent.Pressed, TogglePhsyicsDebug));
-            KeyMap camControls = new KeyMap(GenericInputGroups.Camera.ToString(), cameraDefaults);
+            camControls.AddKeyBinding(new KeyBinding("Change Mode", Keys.Decimal, KeyEvent.Pressed, CameraModeCycle));
+            camControls.AddKeyBinding(new KeyBinding("Home", Keys.Multiply, KeyEvent.Pressed, CameraMoveHome));
+
+            camControls.AddKeyBinding(new KeyBinding("Toggle Debug Info", Keys.F1, KeyEvent.Pressed, ToggleDebugInfo));
+            camControls.AddKeyBinding(new KeyBinding("Toggle Physics Debug", Keys.F2, KeyEvent.Pressed, TogglePhsyicsDebug));
             kmc.AddMap(camControls);
 
             return kmc;
@@ -74,9 +68,6 @@ namespace ssGame
             base.InitializeSound();
         }
 
-        #endregion
-
-        #region Camera Control        
         #endregion
 
         #region CallBacks
