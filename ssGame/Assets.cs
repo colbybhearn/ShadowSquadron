@@ -55,5 +55,19 @@ namespace ssGame
 
             return f;
         }
+
+        internal static Beam CreateBeam()
+        {
+            Vector3 scale = new Vector3(2, 2, 2);
+            Beam f = new Beam(
+                Vector3.Zero,
+                scale,
+                Matrix.Identity,
+                null,
+                0
+                );
+
+            return f;
+        }
     }
 }

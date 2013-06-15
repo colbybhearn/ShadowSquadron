@@ -12,6 +12,7 @@ namespace ssGame
         EnemyCruiser,
         EnemyCrystal,
         Feather,
+        Beam
     }
 
     public enum CameraModes
