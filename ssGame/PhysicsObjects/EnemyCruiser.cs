@@ -59,7 +59,11 @@ namespace ssGame.PhysicsObjects
         BoostController RotJetZ;
         const float MAX_VERT_MAGNITUDE=30;
         const float MAX_ROT_JET=10;
-
+        public EnemyCruiser()
+            : base()
+        {
+            config = new acCruiser();
+        }
         public EnemyCruiser(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
@@ -83,6 +87,13 @@ namespace ssGame.PhysicsObjects
             actionManager.AddBinding((int)Actions.Pitch, new GameHelper.Input.ActionBindingDelegate(GenericPitch), 1);
             actionManager.AddBinding((int)Actions.Roll, new GameHelper.Input.ActionBindingDelegate(GenericRoll), 1);
             actionManager.AddBinding((int)Actions.Yaw, new GameHelper.Input.ActionBindingDelegate(GenericYaw), 1);
+        }
+
+        public void Init(Vector3 pos, Matrix orient)
+        {
+            Vector3 sides = new Vector3(.4f * config.Scale.X, .15f * config.Scale.Y, .5f * config.Scale.Z);
+            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion            
+            CommonInit(pos, orient, true);
         }
 
         public enum Actions

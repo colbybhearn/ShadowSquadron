@@ -23,6 +23,12 @@ namespace ssGame.PhysicsObjects
         public Vector3 HeadingCurrent = new Vector3(0, 0, -1);
         public Vector3 OffsetFromCruiser;
 
+        public Feather()
+            : base()
+        {
+            config = new acFeather();
+        }
+
         public Feather(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
@@ -32,6 +38,15 @@ namespace ssGame.PhysicsObjects
             Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(position, scale / 2, model, true, asset);
 
+        }
+
+        public void Init(Vector3 pos, Matrix orient)
+        {
+            Vector3 sides = new Vector3(1f * config.Scale.X, 1.75f * config.Scale.Y, 1f * config.Scale.Z);
+            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
+            sides = new Vector3(config.Scale.X * 2.1f, config.Scale.Y * 1.15f, config.Scale.Z * 2.1f);
+            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
+            CommonInit(pos, orient, true);
         }
 
         public enum Actions
@@ -111,6 +126,13 @@ namespace ssGame.PhysicsObjects
             // Appy the new current(s)
             this.SetVelocity(Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent);
             //this.Orientation = Matrix.CreateFromQuaternion(Orientation);
+        }
+
+        public override AssetConfig LoadConfig(string file)
+        {
+            //AssetConfig ac = new AssetConfig(string.Empty);
+            config.LoadFromFile(file);
+            return config;
         }
     }
 }

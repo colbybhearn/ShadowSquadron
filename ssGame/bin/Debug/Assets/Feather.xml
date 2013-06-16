@@ -2,6 +2,11 @@
 <AssetName>Feather1</AssetName>
 <AssetTypeName>Feather</AssetTypeName>
 <FbxModelFilepath>Assets\Airplane.fbx</FbxModelFilepath>
+<Scale>
+	<X>2</X>
+	<Y>2</Y>
+	<Z>2</Z>
+</Scale>
 <Params>
 	<YawRate>.1</YawRate>
 	<PitchRate>.1</PitchRate>

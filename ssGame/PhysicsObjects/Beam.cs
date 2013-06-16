@@ -12,10 +12,15 @@ namespace ssGame.PhysicsObjects
 {
     public class Beam : Gobject
     {
-        public float SpeedCurrent = 30;
+        public float SpeedCurrent = 50;
         public Vector3 YawPitchRoll;
         public Vector3 HeadingCurrent = new Vector3(0, 0, -1);
         public Vector3 OffsetFromCruiser;
+        public Beam()
+            : base()
+        {
+            config = new acBeam();
+        }
 
         public Beam(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
@@ -26,6 +31,13 @@ namespace ssGame.PhysicsObjects
             //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(position, scale / 2, model, true, asset);
             Orientation = orient;
+        }
+
+        public void Init(Vector3 pos, Matrix orient)
+        {
+            Vector3 sides = new Vector3(1f * config.Scale.X, 1f * config.Scale.Y, 1f * config.Scale.Z);
+            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
+            CommonInit(pos, orient, true);
         }
 
         public override void FinalizeBody()

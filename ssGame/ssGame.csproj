@@ -66,10 +66,14 @@
     <Compile Include="frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
+    <Compile Include="PhysicsObjects\acBeam.cs" />
+    <Compile Include="PhysicsObjects\acCruiser.cs" />
+    <Compile Include="PhysicsObjects\acFighter.cs" />
     <Compile Include="PhysicsObjects\Beam.cs" />
     <Compile Include="PhysicsObjects\EnemyCruiser.cs" />
     <Compile Include="PhysicsObjects\EnemyFighter.cs" />
     <Compile Include="PhysicsObjects\Feather.cs" />
+    <Compile Include="PhysicsObjects\acFeather.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="frmServer.cs">

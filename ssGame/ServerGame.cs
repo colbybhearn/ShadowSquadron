@@ -35,11 +35,12 @@ namespace ssGame
         public override void InitializeContent()
         {
             base.InitializeContent();
-            assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter);
-            assetManager.AddAssetType(AssetTypes.EnemyCruiser, CreateCruiser);
-            assetManager.AddAssetType(AssetTypes.Feather, CreateFeather);
-            assetManager.AddAssetType(AssetTypes.Beam, CreateBeam);
+            assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter, typeof(EnemyFighter));
+            assetManager.AddAssetType(AssetTypes.EnemyCruiser, CreateCruiser, typeof(EnemyCruiser));
+            assetManager.AddAssetType(AssetTypes.Feather, CreateFeather, typeof(Feather));
+            assetManager.AddAssetType(AssetTypes.Beam, CreateBeam, typeof(Beam));
             assetManager.LoadAssets(Content);
+            
         }
 
         public override void InitializeCameras()
@@ -115,6 +116,8 @@ namespace ssGame
         private void SpawnFeather()
         {
             feather = (Feather)GetFeather(new Vector3(0, 0, 0));
+            //feather = (Feather)assetManager.GetNewInstance(AssetTypes.Feather);
+            feather.Init(new Vector3(0, 0, 0), feather.Orientation);
             physicsManager.AddNewObject(feather);
         }
 
@@ -122,10 +125,11 @@ namespace ssGame
         {
             Random r = new Random((int)DateTime.Now.ToOADate());
             float x, z;
-            int count = 13;
+            int count = 15;
             x = 30;
             z = 30;
             c = (EnemyCruiser)GetEnemyCruiser(new Vector3(x + 10, 15 + 0, z + 0));
+            c.Init(new Vector3(x + 10, 15 + 0, z + 0), Matrix.Identity);
             //c.SetVelocity(new Vector3(0, 0, -20f));
             physicsManager.AddNewObject(c);
 
@@ -137,9 +141,10 @@ namespace ssGame
                 x = x * 250;
                 z = z * 250;
 
-                Gobject f = GetEnemyFighter(new Vector3(x, 15, z));
-                physicsManager.AddNewObject(f);
-
+                //Gobject fighter = GetEnemyFighter(new Vector3(x, 15, z));
+                EnemyFighter fighter = (EnemyFighter)GetEnemyFighter(new Vector3(x, 15, z));
+                fighter.Init(new Vector3(x, 15, z), Matrix.Identity);
+                physicsManager.AddNewObject(fighter);
             }
         }
 
@@ -156,45 +161,47 @@ namespace ssGame
         public Gobject CreateCruiser()
         {
             Gobject o = (EnemyCruiser)Assets.CreateCruiser();
-            o.Scale = new Vector3(5, 5, 5);
+            //o.Scale = new Vector3(5, 5, 5);
             return o;
         }
 
         public Gobject CreateBeam()
         {
             Gobject o = (Beam)Assets.CreateBeam();
-            o.Scale = new Vector3(3, 3, 3);
+            //o.Scale = new Vector3(3, 3, 3);
             return o;
         }
 
         private Gobject GetFeather(Vector3 pos)
         {
             Gobject o = assetManager.GetNewInstance(AssetTypes.Feather);
-            o.Position = pos;
+            o.CommonInit(pos, Matrix.Identity, true);
             return o;
         }
 
         private Gobject GetEnemyCruiser(Vector3 pos)
         {
             Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyCruiser);
-            o.Position = pos;
+            o.CommonInit(pos, Matrix.Identity, true);
             return o;
         }
 
         private Gobject GetEnemyFighter(Vector3 pos)
         {
             Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyFighter);
-            o.Scale = new Vector3(.1f, .1f, .1f);
-            o.Position = pos;
+            //o.config.Scale = new Vector3(.1f, .1f, .1f);
+            o.CommonInit(pos, Matrix.Identity, true);
             return o;
         }
 
         private Gobject GetBeam(Vector3 pos, Matrix Orientation)
         {
-            Gobject o = assetManager.GetNewInstance(AssetTypes.Beam);
-            o.Scale = new Vector3(.1f, .1f, .1f);
-            o.Position = pos;
-            o.SetOrientation(Orientation);
+            Beam o = (Beam)assetManager.GetNewInstance(AssetTypes.Beam);
+            //o.Scale = new Vector3(.1f, .01f, .01f);
+            //o.CommonInit(pos, Orientation, true);
+            o.Init(pos, o.BodyOrientation());
+            //o.SetOrientation(Orientation);
+            
             
             return o;
         }
@@ -245,11 +252,12 @@ namespace ssGame
             
             
             physicsManager.AddNewObject((Gobject)b);
+            
+            b.SetOrientation(Orientation);
+            b.SetForwardSpeed();
+            //b.SetVelocity(Vector3.Normalize(Orientation.Forward) * b.SpeedCurrent);
+            //Orientation = Orientation * Matrix.CreateRotationX((float)Math.PI / 2) * Matrix.CreateRotationY((float)Math.PI / 2);;
             //b.SetOrientation(Orientation);
-            //b.SetForwardSpeed();
-
-            //Gobject f = GetEnemyFighter(new Vector3(x, 15, z));
-            //physicsManager.AddNewObject(f);
         }
         
 

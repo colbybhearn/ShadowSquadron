@@ -4,6 +4,7 @@ using GameHelper.Objects;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using ssGame.PhysicsObjects;
 
 namespace ssGame
 {
@@ -46,7 +47,7 @@ namespace ssGame
         public override void InitializeContent()
         {
             base.InitializeContent();
-            assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter);
+            assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter, typeof(EnemyFighter));
             //LoadModel(ref modelEnemyFighter, "Airplane", AssetTypes.EnemyFighter, CreateFighter);
             //LoadModel(ref modelFeatherFighter, "Airplane", AssetTypes.Feather1, CreateFighter);
             assetManager.LoadAssets(Content);

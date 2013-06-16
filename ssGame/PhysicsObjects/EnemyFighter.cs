@@ -58,6 +58,13 @@ namespace ssGame.PhysicsObjects
         public Vector3 HeadingCurrent = new Vector3(0,0,-1);
         public Vector3 OffsetFromCruiser;
 
+
+        public EnemyFighter()
+            : base()
+        {
+            config = new acFighter();
+        }
+
         public EnemyFighter(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
@@ -70,6 +77,12 @@ namespace ssGame.PhysicsObjects
             mode = Modes.Patrol;
         }
 
+        public void Init(Vector3 pos, Matrix orient)
+        {
+            Vector3 sides = new Vector3(.4f * config.Scale.X, .15f * config.Scale.Y, .5f * config.Scale.Z);
+            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion            
+            CommonInit(pos, orient, true);
+        }
         public enum Actions
         {
             ThrustUp,
