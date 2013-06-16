@@ -47,9 +47,7 @@ namespace ssGame
         public override void InitializeContent()
         {
             base.InitializeContent();
-            assetManager.AddAssetType(AssetTypes.EnemyFighter, CreateFighter, typeof(EnemyFighter));
-            //LoadModel(ref modelEnemyFighter, "Airplane", AssetTypes.EnemyFighter, CreateFighter);
-            //LoadModel(ref modelFeatherFighter, "Airplane", AssetTypes.Feather1, CreateFighter);
+            assetManager.AddAssetType(AssetTypes.EnemyFighter, typeof(EnemyFighter));
             assetManager.LoadAssets(Content);
         }
         public override void InitializeCameras()
@@ -72,14 +70,6 @@ namespace ssGame
         #endregion
 
         #region CallBacks
-        public Gobject CreateFighter()
-        {
-            return Assets.CreateFighter();
-        }
-        public Gobject CreateFeather1()
-        {
-            return Assets.CreateFighter();
-        }
 
         public void TurnRight()
         {
