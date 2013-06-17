@@ -12,7 +12,7 @@ namespace ssGame.PhysicsObjects
 {
     public class Beam : Gobject
     {
-        public float SpeedCurrent = 50;
+        public float SpeedCurrent = 500;
         public Vector3 YawPitchRoll;
         public Vector3 HeadingCurrent = new Vector3(0, 0, -1);
         public Vector3 OffsetFromCruiser;

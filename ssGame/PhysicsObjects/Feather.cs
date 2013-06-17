@@ -124,7 +124,7 @@ namespace ssGame.PhysicsObjects
             YawPitchRoll = new Vector3(0, 0, 0);
 
             // Appy the new current(s)
-            this.SetVelocity(Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent);
+            this.SetVelocity(Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent);            
             //this.Orientation = Matrix.CreateFromQuaternion(Orientation);
         }
 

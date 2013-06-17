@@ -12,7 +12,6 @@ namespace ssGame.PhysicsObjects
         {
             base.LoadFromFile(file);
             this.Scale = new Microsoft.Xna.Framework.Vector3(.1f, .1f, .1f);
-
             return true;
         }
     }

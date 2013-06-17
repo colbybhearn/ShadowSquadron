@@ -79,7 +79,7 @@ namespace ssGame.PhysicsObjects
 
         public void Init(Vector3 pos, Matrix orient)
         {
-            Vector3 sides = new Vector3(.4f * config.Scale.X, .15f * config.Scale.Y, .5f * config.Scale.Z);
+            Vector3 sides = new Vector3(10f * config.Scale.X, 1.5f * config.Scale.Y, 6f * config.Scale.Z);
             Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion            
             CommonInit(pos, orient, true);
         }

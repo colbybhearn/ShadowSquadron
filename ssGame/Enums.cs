@@ -17,7 +17,8 @@ namespace ssGame
 
     public enum CameraModes
     {
-        FreeLook
+        FreeLook,
+        Chase
     }
 
 

@@ -8,7 +8,6 @@ namespace ssGame.PhysicsObjects
 {
     public class acBeam : AssetConfig
     {
-
         public override bool LoadFromFile(string file)
         {
             base.LoadFromFile(file);

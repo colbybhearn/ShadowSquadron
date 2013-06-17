@@ -12,6 +12,7 @@ using GameHelper.Objects;
 using Microsoft.Xna.Framework;
 using ssGame.Controllers;
 using System.Diagnostics;
+using JigLibX.Collision;
 
 namespace ssGame
 {
@@ -46,7 +47,8 @@ namespace ssGame
         {
             base.InitializeCameras();
             cameraManager.AddCamera((int)CameraModes.FreeLook, new FreeCamera());
-            cameraManager.SetCurrentCamera((int)CameraModes.FreeLook);
+            cameraManager.AddCamera((int)CameraModes.Chase, new ChaseCameraRelative());
+            cameraManager.SetCurrentCamera((int)CameraModes.Chase);
         }
 
         public override void InitializeEnvironment()
@@ -138,11 +140,80 @@ namespace ssGame
                 x = x * 250;
                 z = z * 250;
 
-                //Gobject fighter = GetEnemyFighter(new Vector3(x, 15, z));
                 EnemyFighter fighter = (EnemyFighter)GetEnemyFighter(new Vector3(x, 15, z));
+                //fighter.AddCollisionCallback(new JigLibX.Collision.CollisionCallbackFn(EnemyHit));
                 fighter.Init(new Vector3(x, 15, z), Matrix.Identity);
                 physicsManager.AddNewObject(fighter);
             }
+        }
+        /*
+        public bool EnemyHit(CollisionSkin skin0, CollisionSkin skin1)
+        {
+            EnemyFighter fighter = null;
+            Gobject obj = null;
+            if (skin0.Owner.ExternalData is EnemyFighter)
+                fighter = skin0.Owner.ExternalData as EnemyFighter;
+            if (skin1.Owner == null)
+                return true;
+            if (skin1.Owner.ExternalData is Gobject)
+                obj = skin1.Owner.ExternalData as Gobject;
+
+            if (fighter == null || obj == null)
+                return true;
+
+            if (objectsToDelete.Contains(obj.ID)) // if the object is going to be deleted soon,
+                return false; // don't bother doing any collision with it
+
+            int type = obj.aType.Id;
+            if ((AssetTypes)type == AssetTypes.EnemyFighter)
+            {
+                //fighter.SetLaser(true);
+                DeleteObject(obj.ID);
+                return false;
+            }
+            if ((AssetTypes)type == AssetTypes.Radar1Pickup)
+            {
+                //fighter.SetRadar(true);
+                DeleteObject(obj.ID);
+                return false;
+            }
+            return true;
+        }
+        */
+
+
+        public bool BeamHitSomething(CollisionSkin skin0, CollisionSkin skin1)
+        {
+            Beam beam = null;
+            Gobject obj = null;
+            if (skin0.Owner.ExternalData is Beam)
+                beam = skin0.Owner.ExternalData as Beam;
+            if (skin1.Owner == null)
+                return true;
+            if (skin1.Owner.ExternalData is Gobject)
+                obj = skin1.Owner.ExternalData as Gobject;
+
+            if (beam == null || obj == null)
+                return true;
+
+            if (objectsToDelete.Contains(obj.ID)) // if the object is going to be deleted soon,
+                return false; // don't bother doing any collision with it
+
+            DeleteObject(beam.ID);
+
+            int type = obj.aType.Id;
+            if ((AssetTypes)type == AssetTypes.EnemyFighter)
+            {
+                DeleteObject(obj.ID);
+                //DeleteObject(obj.ID);
+                return false;
+            }
+            if ((AssetTypes)type == AssetTypes.EnemyCruiser)
+            {
+                //DeleteObject(obj.ID);
+                return false;
+            }
+            return true;
         }
 
         private Gobject GetFeather(Vector3 pos)
@@ -168,6 +239,7 @@ namespace ssGame
         {
             Beam o = (Beam)assetManager.GetNewInstance(AssetTypes.Beam);
             o.Init(pos, o.BodyOrientation());
+            o.AddCollisionCallback(BeamHitSomething);
             return o;
         }
 
@@ -235,8 +307,28 @@ namespace ssGame
                 else if (go is Feather)
                 {
                     Feather f = go as Feather;
-                    f.Update();
+                    f.Update();                    
                 }
+                else if (go is Beam)
+                {
+                    Beam b = go as Beam;
+                    if (Vector3.Distance(b.BodyPosition(), Vector3.Zero) > 500)
+                        physicsManager.RemoveObject(b.ID);
+                }
+            }
+        }
+
+        public override void UpdateCamera()
+        {
+            base.UpdateCamera();
+            if (feather == null)
+                return;
+
+            if (!(cameraManager.currentCamera is FreeCamera))
+            {
+                cameraManager.currentCamera.TargetPosition = feather.BodyPosition() + feather.BodyVelocity();
+                cameraManager.currentCamera.CurrentPosition = feather.BodyPosition();
+                cameraManager.currentCamera.SetCurrentOrientation(feather.BodyOrientation());
             }
         }
     }
