@@ -296,6 +296,9 @@ namespace ssGame
         {
             foreach (Gobject go in gameObjects.Values)
             {
+                // Removes spinning from collisions
+                go.Body.AngularVelocity = Vector3.Zero;
+
                 if (go is EnemyFighter)
                 {
                     FighterController.Update(go as EnemyFighter, c, null);
