@@ -65,41 +65,41 @@ namespace ssGame
             inputManager.EnableKeyMap("flight");
         }
 
-        public override GameHelper.Input.KeyMapCollection GetDefaultControls()
+        public override GameHelper.Input.ButtonMapCollection GetDefaultControls()
         {
-            KeyMapCollection kmc = new KeyMapCollection();
+            ButtonMapCollection kmc = new ButtonMapCollection();
             List<KeyBinding> flight = new List<KeyBinding>();
             //flight.Add(new KeyBinding("right", Microsoft.Xna.Framework.Input.Keys.D, false, false, false, KeyEvent.Down, TurnRight));
-            KeyMap map = new KeyMap("null", flight);
+            ButtonMap map = new ButtonMap("null", flight);
             kmc.AddMap(map);
             
             //Camera
-            KeyMap camControls = new KeyMap(GenericInputGroups.Camera.ToString());
-            camControls.AddKeyBinding(new KeyBinding("Forward", Keys.NumPad8, KeyEvent.Down, CameraMoveForward));
-            camControls.AddKeyBinding(new KeyBinding("Left", Keys.NumPad4, KeyEvent.Down, CameraMoveLeft));
-            camControls.AddKeyBinding(new KeyBinding("Backward", Keys.NumPad5, KeyEvent.Down, CameraMoveBackward));
-            camControls.AddKeyBinding(new KeyBinding("Right", Keys.NumPad6, KeyEvent.Down, CameraMoveRight));
-            camControls.AddKeyBinding(new KeyBinding("Speed Increase", Keys.NumPad7, KeyEvent.Pressed, CameraMoveSpeedIncrease));
-            camControls.AddKeyBinding(new KeyBinding("Speed Decrease", Keys.NumPad1, KeyEvent.Pressed, CameraMoveSpeedDecrease));
-            camControls.AddKeyBinding(new KeyBinding("Height Increase", Keys.NumPad9, KeyEvent.Down, CameraMoveHeightIncrease));
-            camControls.AddKeyBinding(new KeyBinding("Height Decrease", Keys.NumPad3, KeyEvent.Down, CameraMoveHeightDecrease));
+            ButtonMap camControls = new ButtonMap(GenericInputGroups.Camera.ToString());
+            camControls.AddBinding(new KeyBinding("Forward", Keys.NumPad8, KeyEvent.Down, CameraMoveForward));
+            camControls.AddBinding(new KeyBinding("Left", Keys.NumPad4, KeyEvent.Down, CameraMoveLeft));
+            camControls.AddBinding(new KeyBinding("Backward", Keys.NumPad5, KeyEvent.Down, CameraMoveBackward));
+            camControls.AddBinding(new KeyBinding("Right", Keys.NumPad6, KeyEvent.Down, CameraMoveRight));
+            camControls.AddBinding(new KeyBinding("Speed Increase", Keys.NumPad7, KeyEvent.Pressed, CameraMoveSpeedIncrease));
+            camControls.AddBinding(new KeyBinding("Speed Decrease", Keys.NumPad1, KeyEvent.Pressed, CameraMoveSpeedDecrease));
+            camControls.AddBinding(new KeyBinding("Height Increase", Keys.NumPad9, KeyEvent.Down, CameraMoveHeightIncrease));
+            camControls.AddBinding(new KeyBinding("Height Decrease", Keys.NumPad3, KeyEvent.Down, CameraMoveHeightDecrease));
 
-            camControls.AddKeyBinding(new KeyBinding("Change Mode", Keys.Decimal, KeyEvent.Pressed, CameraModeCycle));
-            camControls.AddKeyBinding(new KeyBinding("Home", Keys.Multiply, KeyEvent.Pressed, CameraMoveHome));
+            camControls.AddBinding(new KeyBinding("Change Mode", Keys.Decimal, KeyEvent.Pressed, CameraModeCycle));
+            camControls.AddBinding(new KeyBinding("Home", Keys.Multiply, KeyEvent.Pressed, CameraMoveHome));
 
-            camControls.AddKeyBinding(new KeyBinding("Toggle Debug Info", Keys.F1, KeyEvent.Pressed, ToggleDebugInfo));
-            camControls.AddKeyBinding(new KeyBinding("Toggle Physics Debug", Keys.F2, KeyEvent.Pressed, TogglePhsyicsDebug));
+            camControls.AddBinding(new KeyBinding("Toggle Debug Info", Keys.F1, KeyEvent.Pressed, ToggleDebugInfo));
+            camControls.AddBinding(new KeyBinding("Toggle Physics Debug", Keys.F2, KeyEvent.Pressed, TogglePhsyicsDebug));
 
             kmc.AddMap(camControls);
 
-            KeyMap flightControls = new KeyMap("flight");
-            flightControls.AddKeyBinding(new KeyBinding("Forward", Keys.W, KeyEvent.Down, FeatherPitchDown));
-            flightControls.AddKeyBinding(new KeyBinding("Left", Keys.A, KeyEvent.Down, FeatherRollLeft));
-            flightControls.AddKeyBinding(new KeyBinding("Backward", Keys.S, KeyEvent.Down, FeatherPitchUp));
-            flightControls.AddKeyBinding(new KeyBinding("Right", Keys.D, KeyEvent.Down, FeatherRollRight));
-            flightControls.AddKeyBinding(new KeyBinding("Accelerate", Keys.OemPlus, KeyEvent.Down, FeatherAccelerate));
-            flightControls.AddKeyBinding(new KeyBinding("Decelerate", Keys.OemMinus, KeyEvent.Down, FeatherDecelerate));
-            flightControls.AddKeyBinding(new KeyBinding("Fire", Keys.Space, KeyEvent.Pressed, FeatherFire));
+            ButtonMap flightControls = new ButtonMap("flight");
+            flightControls.AddBinding(new KeyBinding("Forward", Keys.W, KeyEvent.Down, FeatherPitchDown));
+            flightControls.AddBinding(new KeyBinding("Left", Keys.A, KeyEvent.Down, FeatherRollLeft));
+            flightControls.AddBinding(new KeyBinding("Backward", Keys.S, KeyEvent.Down, FeatherPitchUp));
+            flightControls.AddBinding(new KeyBinding("Right", Keys.D, KeyEvent.Down, FeatherRollRight));
+            flightControls.AddBinding(new KeyBinding("Accelerate", Keys.OemPlus, KeyEvent.Down, FeatherAccelerate));
+            flightControls.AddBinding(new KeyBinding("Decelerate", Keys.OemMinus, KeyEvent.Down, FeatherDecelerate));
+            flightControls.AddBinding(new KeyBinding("Fire", Keys.Space, KeyEvent.Pressed, FeatherFire));
 
             kmc.AddMap(flightControls);
 
