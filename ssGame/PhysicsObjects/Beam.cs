@@ -47,10 +47,9 @@ namespace ssGame.PhysicsObjects
                 //Vector3 com = SetMass(2.0f);
                 //Skin.ApplyLocalTransform(new JigLibX.Math.Transform(-com, Matrix.Identity));
                 
-                body.MoveTo(Position, Orientation);
+                BodyInit(Position, Orientation);
                 SetForwardSpeed();
-                //body.EnableBody(); // adds to CurrentPhysicsSystem
-                EnableParts();
+                EnableParts(); // adds to CurrentPhysicsSystem
             }
             catch (Exception E)
             {
