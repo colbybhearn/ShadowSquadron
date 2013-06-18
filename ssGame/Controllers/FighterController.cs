@@ -38,7 +38,7 @@ namespace ssGame.Controllers
         
         static Random r = new Random();
 
-        public static void Update(EnemyFighter fighter, Gobject cruiser, Gobject player)
+        public static void Update(EnemyFighter fighter, Entity cruiser, Entity player)
         {
             switch (fighter.mode)
             {
@@ -120,7 +120,7 @@ namespace ssGame.Controllers
         }
 
 
-        public static bool IsNearCuiser(Gobject Fighter, Gobject cruiser)
+        public static bool IsNearCuiser(Entity Fighter, Entity cruiser)
         {
             if (cruiser == null)
                 return true;
@@ -130,7 +130,7 @@ namespace ssGame.Controllers
             return false;
         }
 
-        public static bool isTargetNear(Gobject Fighter, Gobject player)
+        public static bool isTargetNear(Entity Fighter, Entity player)
         {
             if (player == null)
                 return false;

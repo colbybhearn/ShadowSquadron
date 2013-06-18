@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ssGame.PhysicsObjects
 {
-    public class Beam : Gobject
+    public class Beam : Entity
     {
         public float SpeedCurrent = 500;
         public Vector3 YawPitchRoll;
@@ -35,7 +35,7 @@ namespace ssGame.PhysicsObjects
 
         public void Init(Vector3 pos, Matrix orient)
         {
-            Vector3 sides = new Vector3(1f * config.Scale.X, 1f * config.Scale.Y, 1f * config.Scale.Z);
+            Vector3 sides = new Vector3(2f * config.Scale.X, 2f * config.Scale.Y, 3f * config.Scale.Z);
             Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
             CommonInit(pos, orient, true);
         }
@@ -46,9 +46,11 @@ namespace ssGame.PhysicsObjects
             {
                 //Vector3 com = SetMass(2.0f);
                 //Skin.ApplyLocalTransform(new JigLibX.Math.Transform(-com, Matrix.Identity));
-                Body.MoveTo(Position, Orientation);
+                
+                body.MoveTo(Position, Orientation);
                 SetForwardSpeed();
-                Body.EnableBody(); // adds to CurrentPhysicsSystem
+                //body.EnableBody(); // adds to CurrentPhysicsSystem
+                EnableParts();
             }
             catch (Exception E)
             {

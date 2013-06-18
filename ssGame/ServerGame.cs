@@ -184,14 +184,15 @@ namespace ssGame
 
         public bool BeamHitSomething(CollisionSkin skin0, CollisionSkin skin1)
         {
+            
             Beam beam = null;
-            Gobject obj = null;
+            Entity obj = null;
             if (skin0.Owner.ExternalData is Beam)
                 beam = skin0.Owner.ExternalData as Beam;
             if (skin1.Owner == null)
                 return true;
-            if (skin1.Owner.ExternalData is Gobject)
-                obj = skin1.Owner.ExternalData as Gobject;
+            if (skin1.Owner.ExternalData is Entity)
+                obj = skin1.Owner.ExternalData as Entity;
 
             if (beam == null || obj == null)
                 return true;
@@ -216,26 +217,26 @@ namespace ssGame
             return true;
         }
 
-        private Gobject GetFeather(Vector3 pos)
+        private Entity GetFeather(Vector3 pos)
         {
-            Gobject o = assetManager.GetNewInstance(AssetTypes.Feather);
+            Entity o = assetManager.GetNewInstance(AssetTypes.Feather);
             return o;
         }
 
-        private Gobject GetEnemyCruiser(Vector3 pos)
+        private Entity GetEnemyCruiser(Vector3 pos)
         {
             EnemyCruiser o = (EnemyCruiser)assetManager.GetNewInstance(AssetTypes.EnemyCruiser);
             o.Init(pos, Matrix.Identity);
             return o;
         }
 
-        private Gobject GetEnemyFighter(Vector3 pos)
+        private Entity GetEnemyFighter(Vector3 pos)
         {
-            Gobject o = assetManager.GetNewInstance(AssetTypes.EnemyFighter);
+            Entity o = assetManager.GetNewInstance(AssetTypes.EnemyFighter);
             return o;
         }
 
-        private Gobject GetBeam(Vector3 pos, Matrix Orientation)
+        private Entity GetBeam(Vector3 pos, Matrix Orientation)
         {
             Beam o = (Beam)assetManager.GetNewInstance(AssetTypes.Beam);
             o.Init(pos, o.BodyOrientation());
@@ -286,7 +287,7 @@ namespace ssGame
 
             Beam b = (Beam)GetBeam(feather.BeamSpawnLocation(), feather.BodyOrientation());
             Matrix Orientation = feather.BodyOrientation();
-            physicsManager.AddNewObject((Gobject)b);
+            physicsManager.AddNewObject((Entity)b);
             b.SetOrientation(Orientation);
             b.SetForwardSpeed();
         }
@@ -294,10 +295,10 @@ namespace ssGame
 
         public override void DoAiLogic()
         {
-            foreach (Gobject go in gameObjects.Values)
+            foreach (Entity go in gameObjects.Values)
             {
                 // Removes spinning from collisions
-                go.Body.AngularVelocity = Vector3.Zero;
+                go.SetAngularVelocity(Vector3.Zero);
 
                 if (go is EnemyFighter)
                 {

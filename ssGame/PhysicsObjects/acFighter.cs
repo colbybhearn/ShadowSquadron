@@ -6,7 +6,7 @@ using GameHelper.Objects;
 
 namespace ssGame.PhysicsObjects
 {
-    class acFighter : AssetConfig
+    class acFighter : EntityConfig
     {
         public override bool LoadFromFile(string file)
         {

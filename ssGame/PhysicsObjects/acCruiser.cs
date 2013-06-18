@@ -6,7 +6,7 @@ using GameHelper.Objects;
 
 namespace ssGame.PhysicsObjects
 {
-    public class acCruiser : AssetConfig
+    public class acCruiser : EntityConfig
     {
         public override bool LoadFromFile(string file)
         {

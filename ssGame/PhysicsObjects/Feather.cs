@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace ssGame.PhysicsObjects
 {
-    public class Feather : Gobject
+    public class Feather : Entity
     {
         public float SPEED_MIN = .5f;
         public float SPEED_MAX = 15;
@@ -101,8 +101,8 @@ namespace ssGame.PhysicsObjects
             {
                 //Vector3 com = SetMass(2.0f);
                 //Skin.ApplyLocalTransform(new JigLibX.Math.Transform(-com, Matrix.Identity));
-                Body.MoveTo(Position, Matrix.Identity);
-                Body.EnableBody(); // adds to CurrentPhysicsSystem
+                body.MoveTo(Position, Matrix.Identity);
+                EnableParts(); // adds to CurrentPhysicsSystem
             }
             catch (Exception E)
             {
@@ -128,7 +128,7 @@ namespace ssGame.PhysicsObjects
             //this.Orientation = Matrix.CreateFromQuaternion(Orientation);
         }
 
-        public override AssetConfig LoadConfig(string file)
+        public override EntityConfig LoadConfig(string file)
         {
             //AssetConfig ac = new AssetConfig(string.Empty);
             config.LoadFromFile(file);

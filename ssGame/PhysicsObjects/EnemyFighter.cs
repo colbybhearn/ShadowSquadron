@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ssGame.PhysicsObjects
 {
-    public class EnemyFighter : Gobject
+    public class EnemyFighter : Entity
     {
 
         /*
@@ -97,8 +97,8 @@ namespace ssGame.PhysicsObjects
             {
                 //Vector3 com = SetMass(2.0f);
                 //Skin.ApplyLocalTransform(new JigLibX.Math.Transform(-com, Matrix.Identity));
-                Body.MoveTo(Position, Matrix.Identity);
-                Body.EnableBody(); // adds to CurrentPhysicsSystem
+                body.MoveTo(Position, Matrix.Identity);
+                EnableParts(); // adds to CurrentPhysicsSystem
             }
             catch (Exception E)
             {
