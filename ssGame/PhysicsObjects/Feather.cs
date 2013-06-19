@@ -95,6 +95,17 @@ namespace ssGame.PhysicsObjects
         {
             YawPitchRoll.X -= YawPitchRollRate.X;
         }
+        // Joystick
+        public void Roll(float rate)
+        {
+            YawPitchRoll.Z += YawPitchRollRate.Z * rate;
+        }
+        // Joystick
+        public void Pitch(float rate)
+        {
+            YawPitchRoll.Y -= YawPitchRollRate.Y * rate;
+        }
+
         public override void FinalizeBody()
         {
             try
