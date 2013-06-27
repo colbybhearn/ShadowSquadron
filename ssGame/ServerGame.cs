@@ -23,6 +23,8 @@ namespace ssGame
         Feather feather;
         List<Beam> Beams = new List<Beam>();
 
+        private long lastFire = 0;
+
         #region Initialization
         public ServerGame() : base()
         {
@@ -102,11 +104,17 @@ namespace ssGame
             flightControls.AddBinding(new KeyBinding("Decelerate", Keys.OemMinus, ButtonEvent.Down, FeatherDecelerate));
             flightControls.AddBinding(new KeyBinding("Fire", Keys.Space, ButtonEvent.Pressed, FeatherFire));
 
+            flightControls.AddBinding(new GamePadButtonBinding("Accelerate_gp", Buttons.RightShoulder, ButtonEvent.Down, FeatherAccelerate));
+            flightControls.AddBinding(new GamePadButtonBinding("Decelerate_gp", Buttons.LeftShoulder, ButtonEvent.Down, FeatherDecelerate));
+            //flightControls.AddBinding(new GamePadButtonBinding("Fire_gp", Buttons.RightTrigger, ButtonEvent.Down, FeatherFire)); // Fires too easily, using the analog method
+
+
             ic.AddMap(flightControls);
 
             AnalogMap flightControlsGamePad = new AnalogMap("flight_gp");
 
             flightControlsGamePad.AddBinding(new GamePadThumbStickBinding("Fly", ThumbStick.Left, AnalogEvent.Always, AnalogData.Absolute, FeatherMove));
+            flightControlsGamePad.AddBinding(new GamePadTriggerBinding("Fire", Trigger.Right, AnalogEvent.Always, AnalogData.Absolute, FeatherFireAnalog));
 
             ic.AddMap(flightControlsGamePad);
 
@@ -292,12 +300,26 @@ namespace ssGame
         {
             if (feather == null)
                 return;
+            
+            long currentTime = DateTime.UtcNow.Ticks;
+
+            if (lastFire + (10000 * 200) > currentTime) // 10000 ticks in a milisecond, fire every 10 miliseconds (10 times a second)
+                return;
+
+            lastFire = currentTime;
 
             Beam b = (Beam)GetBeam(feather.BeamSpawnLocation(), feather.Orientation);
             Matrix Orientation = feather.Orientation;
             physicsManager.AddNewObject((Entity)b);
             b.Orientation = Orientation;
             b.SetForwardSpeed();
+        }
+
+        // Trigger!
+        public void FeatherFireAnalog(double value, double _)
+        {
+            if (value > .7)
+                FeatherFire();
         }
 
         // Joystick!
