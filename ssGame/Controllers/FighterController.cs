@@ -43,7 +43,7 @@ namespace ssGame.Controllers
             switch (fighter.mode)
             {
                 case EnemyFighter.Modes.Patrol:
-                    fighter.PositionTarget = cruiser.BodyPosition() + fighter.OffsetFromCruiser;
+                    fighter.PositionTarget = cruiser.Position + fighter.OffsetFromCruiser;
                     // if we are near our destination
                     if (IsNearTargetPosition(fighter, cruiser as EnemyCruiser))
                     {
@@ -124,7 +124,7 @@ namespace ssGame.Controllers
         {
             if (cruiser == null)
                 return true;
-            float dist = Vector3.Distance(cruiser.BodyPosition(), Fighter.BodyPosition());
+            float dist = Vector3.Distance(cruiser.Position, Fighter.Position);
             if (dist < PatrolRange)
                 return true;
             return false;
@@ -146,7 +146,7 @@ namespace ssGame.Controllers
 
         public static bool IsNearTargetPosition(EnemyFighter fighter, EnemyCruiser cruiser)
         {
-            float dist = Vector3.Distance(fighter.BodyPosition(), cruiser.BodyPosition() + fighter.OffsetFromCruiser);
+            float dist = Vector3.Distance(fighter.Position, cruiser.Position + fighter.OffsetFromCruiser);
             if (dist < TargetPositionRange)
                 return true;
             return false;

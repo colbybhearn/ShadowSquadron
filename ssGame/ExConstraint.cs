@@ -2,29 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GameHelper.Input;
-using GameHelper;
-using Microsoft.Xna.Framework.Graphics;
 using ssGame.PhysicsObjects;
 using GameHelper.Camera.Cameras;
+using Microsoft.Xna.Framework;
+using GameHelper.Input;
 using Microsoft.Xna.Framework.Input;
 using GameHelper.Objects;
-using Microsoft.Xna.Framework;
-using ssGame.Controllers;
-using System.Diagnostics;
 using JigLibX.Collision;
 
 namespace ssGame
 {
-    class ServerGame : GameHelper.Base.ServerBase
+    class ExConstraint : GameHelper.Base.ServerBase
     {
-        List<EnemyFighter> EnemyFighters = new List<EnemyFighter>();
-        EnemyCruiser c;
-        Feather feather;
-        List<Beam> Beams = new List<Beam>();
-
         #region Initialization
-        public ServerGame() : base()
+        public ExConstraint()
+            : base()
         {
             this.BackColor = Color.Black;
         }
@@ -36,10 +28,10 @@ namespace ssGame
         public override void InitializeContent()
         {
             base.InitializeContent();
-            assetManager.AddAssetType(AssetTypes.EnemyFighter, typeof(EnemyFighter));
-            assetManager.AddAssetType(AssetTypes.EnemyCruiser, typeof(EnemyCruiser));
+            //assetManager.AddAssetType(AssetTypes.EnemyFighter, typeof(EnemyFighter));
+            //assetManager.AddAssetType(AssetTypes.EnemyCruiser, typeof(EnemyCruiser));
             assetManager.AddAssetType(AssetTypes.Feather, typeof(Feather));
-            assetManager.AddAssetType(AssetTypes.Beam, typeof(Beam));
+            //assetManager.AddAssetType(AssetTypes.Beam, typeof(Beam));
             assetManager.LoadAssets(Content);
         }
 
@@ -119,9 +111,8 @@ namespace ssGame
         {
             base.Start();
             SpawnFeather();
-            //SpawnEnemies();
         }
-
+        Feather feather;
         private void SpawnFeather()
         {
             feather = (Feather)GetFeather(new Vector3(0, 0, 0));
@@ -129,67 +120,7 @@ namespace ssGame
             feather.Init(new Vector3(0, 0, 0), feather.Orientation);
             physicsManager.AddNewObject(feather);
         }
-
-        private void SpawnEnemies()
-        {
-            Random r = new Random((int)DateTime.Now.ToOADate());
-            float x, z;
-            int count = 5;
-            x = 30;
-            z = 30;
-            c = (EnemyCruiser)GetEnemyCruiser(new Vector3(x + 10, 15 + 0, z + 0));
-            physicsManager.AddNewObject(c);
-
-            for (int i = 0; i < count; i++)
-            {
-                x = (float)(r.NextDouble() - .5);
-                z = (float)(r.NextDouble() - .5);
-
-                x = x * 250;
-                z = z * 250;
-
-                EnemyFighter fighter = (EnemyFighter)GetEnemyFighter(new Vector3(x, 15, z));
-                //fighter.AddCollisionCallback(new JigLibX.Collision.CollisionCallbackFn(EnemyHit));
-                fighter.Init(new Vector3(x, 15, z), Matrix.Identity);
-                physicsManager.AddNewObject(fighter);
-            }
-        }
-        /*
-        public bool EnemyHit(CollisionSkin skin0, CollisionSkin skin1)
-        {
-            EnemyFighter fighter = null;
-            Gobject obj = null;
-            if (skin0.Owner.ExternalData is EnemyFighter)
-                fighter = skin0.Owner.ExternalData as EnemyFighter;
-            if (skin1.Owner == null)
-                return true;
-            if (skin1.Owner.ExternalData is Gobject)
-                obj = skin1.Owner.ExternalData as Gobject;
-
-            if (fighter == null || obj == null)
-                return true;
-
-            if (objectsToDelete.Contains(obj.ID)) // if the object is going to be deleted soon,
-                return false; // don't bother doing any collision with it
-
-            int type = obj.aType.Id;
-            if ((AssetTypes)type == AssetTypes.EnemyFighter)
-            {
-                //fighter.SetLaser(true);
-                DeleteObject(obj.ID);
-                return false;
-            }
-            if ((AssetTypes)type == AssetTypes.Radar1Pickup)
-            {
-                //fighter.SetRadar(true);
-                DeleteObject(obj.ID);
-                return false;
-            }
-            return true;
-        }
-        */
-
-
+        
         public bool BeamHitSomething(CollisionSkin skin0, CollisionSkin skin1)
         {
             
@@ -319,11 +250,11 @@ namespace ssGame
 
                 if (go is EnemyFighter)
                 {
-                    FighterController.Update(go as EnemyFighter, c, null);
+                    //FighterController.Update(go as EnemyFighter, c, null);
                 }
                 else if (go is EnemyCruiser)
                 {
-                    CruiserController.Update(go as EnemyCruiser);
+                    //CruiserController.Update(go as EnemyCruiser);
                 }
                 else if (go is Feather)
                 {

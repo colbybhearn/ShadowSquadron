@@ -1,15 +1,48 @@
-<AssetConfig>
-<AssetName>Feather1</AssetName>
-<AssetTypeName>Feather</AssetTypeName>
-<FbxModelFilepath>Assets\Airplane.fbx</FbxModelFilepath>
-<Scale>
-	<X>2</X>
-	<Y>2</Y>
-	<Z>2</Z>
-</Scale>
-<Params>
-	<YawRate>.1</YawRate>
-	<PitchRate>.1</PitchRate>
-	<RollRate>.1</RollRate>
-</Params>
-</AssetConfig>
+<?xml version="1.0" encoding="utf-8"?>
+<Entity>
+	<Name>Feather1</Name>
+	<Type>SHOULDBEfeather</Type>
+	<Parts>
+		<Part>
+			<Name>fuselageA</Name>
+			<Model>
+				<relFilepath>Assets\Airplane.fbX</relFilepath>
+				<relTranslation X="0" Y="0" Z="0"/>
+				<relRotation X="0" Y="0" Z="0"/>
+			</Model>
+			<Body>
+				<relTranslation X="6" Y="6" Z="6"/>
+				<relRotation X="0" Y="0" Z="0"/>
+				<Skin>
+
+					<Box>
+						<Center X="0" Y="0" Z="0"/>
+						<SideLengths X="3" Y="3" Z="3"/>
+					</Box>
+
+				</Skin>
+			</Body>
+		</Part>
+                <Part>
+			<Name>fuselageB</Name>
+			<Model>
+				<relFilepath>Assets\Airplane.fbX</relFilepath>
+				<relTranslation X="0" Y="0" Z="0"/>
+				<relRotation X="0" Y="0" Z="0"/>
+			</Model>
+			<Body>
+				<relTranslation X="-6" Y="6" Z="6"/>
+				<relRotation X="0" Y="0" Z="0"/>
+				<Skin>
+
+					<Box>
+						<Center X="0" Y="0" Z="0"/>
+						<SideLengths X="3" Y="3" Z="3"/>
+					</Box>
+
+				</Skin>
+			</Body>
+		</Part>
+	</Parts>
+</Entity>
+

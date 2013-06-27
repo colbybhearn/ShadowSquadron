@@ -1,7 +1,28 @@
-<AssetConfig>
-<AssetName>Beam1</AssetName>
-<AssetTypeName>Beam</AssetTypeName>
-<FbxModelFilepath>Assets\Airplane.fbx</FbxModelFilepath>
-<Params>	
-</Params>
-</AssetConfig>
+<?xml version="1.0" encoding="utf-8"?>
+<Entity>
+	<Name>Beam1</Name>
+	<Type>Beam</Type>
+	<Parts>
+		<Part>
+			<Name>fuselage</Name>
+			<Model>
+				<relFilepath>Assets\Airplane.fbX</relFilepath>
+				<relTranslation X="0" Y="0" Z="0"/>
+				<relRotation X="0" Y="0" Z="0"/>
+			</Model>
+			<Body>
+				<relTranslation X="0" Y="0" Z="0"/>
+				<relRotation X="0" Y="0" Z="0"/>
+				<Skin>
+
+					<Box>
+						<Center X="0" Y="0" Z="0"/>
+						<SideLengths X="3" Y="3" Z="3"/>
+					</Box>
+
+				</Skin>
+			</Body>
+		</Part>		
+	</Parts>
+</Entity>
+

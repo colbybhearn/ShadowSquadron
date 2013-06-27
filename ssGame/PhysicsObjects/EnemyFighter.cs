@@ -50,9 +50,7 @@ namespace ssGame.PhysicsObjects
         public float SpeedTarget = 7;
         public float SpeedCurrent = 7;
 
-
         public Vector3 YawPitchRoll;
-
         
         public Vector3 PositionTarget = new Vector3(0,0,-1);
         public Vector3 HeadingCurrent = new Vector3(0,0,-1);
@@ -62,14 +60,14 @@ namespace ssGame.PhysicsObjects
         public EnemyFighter()
             : base()
         {
-            config = new acFighter();
+            //config = new acFighter();
         }
 
         public EnemyFighter(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
             Vector3 sides = new Vector3(.4f * scale.X, .15f * scale.Y, .5f * scale.Z);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
             //sides = new Vector3(scale.X * 2.1f, scale.Y * 1.15f, scale.Z * 2.1f);
             //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(position, scale / 2, model, true, asset);
@@ -79,10 +77,12 @@ namespace ssGame.PhysicsObjects
 
         public void Init(Vector3 pos, Matrix orient)
         {
-            Vector3 sides = new Vector3(10f * config.Scale.X, 1.5f * config.Scale.Y, 6f * config.Scale.Z);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion            
+            //Vector3 scale = new Vector3(5,5,5);
+            //Vector3 sides = new Vector3(10f * scale.X, 1.5f * scale.Y, 6f * scale.Z);
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion            
             CommonInit(pos, orient, true);
         }
+
         public enum Actions
         {
             ThrustUp,
@@ -124,7 +124,7 @@ namespace ssGame.PhysicsObjects
             this.HeadingCurrent = mHeadingCurrent.Forward;
             this.HeadingCurrent.Normalize();
 
-            Vector3 shouldPointToward = this.PositionTarget - this.BodyPosition();
+            Vector3 shouldPointToward = this.PositionTarget - this.Position;
             shouldPointToward.Normalize();
             float fwDelta = Vector3.Dot(mHeadingCurrent.Forward, shouldPointToward);
             float upDelta = Vector3.Dot(mHeadingCurrent.Up, shouldPointToward);
@@ -185,7 +185,7 @@ namespace ssGame.PhysicsObjects
 
 
             // Appy the new current(s)
-            this.SetVelocity(this.HeadingCurrent * this.SpeedCurrent);
+            this.Velocity=this.HeadingCurrent * this.SpeedCurrent;
             this.Orientation = Matrix.CreateFromQuaternion(Orientation);
         }
     }

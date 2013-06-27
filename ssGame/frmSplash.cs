@@ -35,5 +35,11 @@ namespace ssGame
         {
 
         }
+
+        private void btnExample_Click(object sender, EventArgs e)
+        {
+            frmExample ex = new frmExample();
+            ex.Show();
+        }
     }
 }

@@ -19,14 +19,13 @@ namespace ssGame.PhysicsObjects
         public Beam()
             : base()
         {
-            config = new acBeam();
         }
 
         public Beam(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
             Vector3 sides = new Vector3(1f * scale.X, 1f * scale.Y, 1f * scale.Z);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
             //sides = new Vector3(scale.X * 2.1f, scale.Y * 1.15f, scale.Z * 2.1f);
             //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(position, scale / 2, model, true, asset);
@@ -35,8 +34,9 @@ namespace ssGame.PhysicsObjects
 
         public void Init(Vector3 pos, Matrix orient)
         {
-            Vector3 sides = new Vector3(2f * config.Scale.X, 2f * config.Scale.Y, 3f * config.Scale.Z);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
+            Vector3 scale = new Vector3(1, 1, 1);
+            Vector3 sides = new Vector3(2f * scale.X, 2f * scale.Y, 3f * scale.Z);
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
             CommonInit(pos, orient, true);
         }
 
@@ -59,7 +59,7 @@ namespace ssGame.PhysicsObjects
 
         internal void SetForwardSpeed()
         {
-            this.SetVelocity(Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent);
+            this.Velocity = Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent;
         }
     }
 }

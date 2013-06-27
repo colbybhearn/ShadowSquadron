@@ -8,12 +8,13 @@ using JigLibX.Geometry;
 using JigLibX.Collision;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+using GenEntityConfigTypes;
 
 namespace ssGame.PhysicsObjects
 {
     public class Feather : Entity
     {
-        public float SPEED_MIN = .5f;
+        public float SPEED_MIN = .0f;
         public float SPEED_MAX = 15;
         public float SpeedTarget = 7;
         public float SpeedCurrent = 1;
@@ -26,26 +27,27 @@ namespace ssGame.PhysicsObjects
         public Feather()
             : base()
         {
-            config = new acFeather();
+            //config = new acFeather();
         }
 
         public Feather(Vector3 position, Vector3 scale, Matrix orient, Model model, int asset)
             : base()
         {
             Vector3 sides = new Vector3(1f * scale.X, 1.75f * scale.Y, 1f * scale.Z);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
             sides = new Vector3(scale.X * 2.1f, scale.Y * 1.15f, scale.Z * 2.1f);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(position, scale / 2, model, true, asset);
 
         }
 
         public void Init(Vector3 pos, Matrix orient)
         {
-            Vector3 sides = new Vector3(1f * config.Scale.X, 1.75f * config.Scale.Y, 1f * config.Scale.Z);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
-            sides = new Vector3(config.Scale.X * 2.1f, config.Scale.Y * 1.15f, config.Scale.Z * 2.1f);
-            Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
+            Vector3 scale = new Vector3(4, 4, 4);
+            Vector3 sides = new Vector3(1f * scale.X, 1.75f * scale.Y, 1f * scale.Z);
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -.5f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Top portion
+            sides = new Vector3(scale.X * 2.1f, scale.Y * 1.15f, scale.Z * 2.1f);
+            //Skin.AddPrimitive(new Box(new Vector3(sides.X * -.5f, sides.Y * -1.45f, sides.Z * -.5f), orient, sides), (int)MaterialTable.MaterialID.NotBouncyNormal); // Legs
             CommonInit(pos, orient, true);
         }
 
@@ -58,7 +60,7 @@ namespace ssGame.PhysicsObjects
         }
         public Vector3 BeamSpawnLocation()
         {
-            Vector3 pos = this.BodyPosition() + Vector3.Normalize(Orientation.Forward) * 10;
+            Vector3 pos = this.Position + (Vector3.Normalize(Orientation.Forward) * 10);
             return pos;
         }
         public void IncreseSpeed()
@@ -135,15 +137,8 @@ namespace ssGame.PhysicsObjects
             YawPitchRoll = new Vector3(0, 0, 0);
 
             // Appy the new current(s)
-            this.SetVelocity(Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent);            
+            this.Velocity=Vector3.Normalize(Orientation.Forward) * this.SpeedCurrent;            
             //this.Orientation = Matrix.CreateFromQuaternion(Orientation);
-        }
-
-        public override EntityConfig LoadConfig(string file)
-        {
-            //AssetConfig ac = new AssetConfig(string.Empty);
-            config.LoadFromFile(file);
-            return config;
         }
     }
 }
